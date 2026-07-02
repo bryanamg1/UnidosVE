@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { APP_ROUTES, AUTH_ROLES, PROTECTED_PAGE_CONTENT } from '../constants'
-import FeaturePlaceholderPage from '../components/layout/FeaturePlaceholderPage'
+import { APP_ROUTES, AUTH_ROLES } from '../constants'
 import LoginPage from '../features/auth/pages/LoginPage'
 import RegisterPage from '../features/auth/pages/RegisterPage'
+import CenterDashboardPage from '../features/dashboard/pages/CenterDashboardPage'
 import DonorMapPage from '../features/map/pages/DonorMapPage'
 import PublicRoute from './PublicRoute'
 import ProtectedRoute from './ProtectedRoute'
@@ -74,7 +74,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <FeaturePlaceholderPage content={PROTECTED_PAGE_CONTENT.centerDashboard} />
+                <CenterDashboardPage />
               </RoleRoute>
             </ProtectedRoute>
           }
@@ -85,7 +85,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <FeaturePlaceholderPage content={PROTECTED_PAGE_CONTENT.centerDashboard} />
+                <CenterDashboardPage />
               </RoleRoute>
             </ProtectedRoute>
           }
@@ -96,7 +96,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <FeaturePlaceholderPage content={PROTECTED_PAGE_CONTENT.centerNeeds} />
+                <CenterDashboardPage />
               </RoleRoute>
             </ProtectedRoute>
           }
@@ -107,7 +107,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <FeaturePlaceholderPage content={PROTECTED_PAGE_CONTENT.centerDonations} />
+                <CenterDashboardPage />
               </RoleRoute>
             </ProtectedRoute>
           }

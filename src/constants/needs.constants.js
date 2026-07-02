@@ -41,3 +41,7 @@ export const NEED_FILTER_VALUES = {
   ALL: 'all',
   NEARBY: 'nearby',
 }
+
+export const NEED_STORAGE_KEYS = {
+  ENTRIES: 'unidosve.needs.entries',
+}
