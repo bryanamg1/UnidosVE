@@ -51,6 +51,13 @@ export const donationsService = {
     return readDonationEntries().map(adaptDonation)
   },
 
+  async getCenterDonations(centerId) {
+    await wait()
+    return readDonationEntries()
+      .filter((donation) => donation.centerId === centerId)
+      .map(adaptDonation)
+  },
+
   async createDonation(payload) {
     await wait()
 
@@ -71,5 +78,21 @@ export const donationsService = {
     writeDonationEntries([nextEntry, ...entries])
 
     return adaptDonation(nextEntry)
+  },
+
+  async updateDonationStatus(donationId, status) {
+    await wait()
+
+    const entries = readDonationEntries()
+    const nextEntries = entries.map((donation) =>
+      donation.id === donationId
+        ? { ...donation, status }
+        : donation,
+    )
+
+    const updatedDonation = nextEntries.find((donation) => donation.id === donationId)
+    writeDonationEntries(nextEntries)
+
+    return updatedDonation ? adaptDonation(updatedDonation) : null
   },
 }

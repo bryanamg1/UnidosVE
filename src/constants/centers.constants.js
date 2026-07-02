@@ -12,6 +12,7 @@ export const CENTER_PROFILE_FIELDS = [
   'type',
   'description',
   'address',
+  'city',
   'latitude',
   'longitude',
   'contactPhone',
@@ -29,4 +30,8 @@ export const CENTER_TYPE_LABELS = {
   escuela: 'Escuela',
   punto_vecinal: 'Punto vecinal',
   otro: 'Otro',
+}
+
+export const CENTER_STORAGE_KEYS = {
+  PROFILES: 'unidosve.centers.profiles',
 }
