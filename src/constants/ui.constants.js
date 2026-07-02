@@ -91,7 +91,7 @@ export const LANDING_CONTENT = {
       eyebrow: 'Mapa de ayuda',
       title: 'Cobertura por proximidad',
       detail: 'Visualiza centros cercanos y filtra por urgencia cuando el mapa se habilite.',
-      status: 'Fase 3',
+      status: 'Cobertura activa',
     },
   ],
   signalPanel: {
@@ -102,22 +102,22 @@ export const LANDING_CONTENT = {
 
 export const PUBLIC_PAGE_CONTENT = {
   donate: {
-    badge: 'Fase 4',
-    title: 'Feed de donaciones en preparacion',
+    badge: 'Donaciones',
+    title: 'Feed de ayuda disponible',
     description:
-      'Aqui vivira el listado de necesidades, filtros y el flujo para comprometer donaciones desde datos mock.',
+      'Consulta necesidades activas, filtra por prioridad y registra aportes desde una experiencia unificada.',
   },
   centers: {
-    badge: 'Fase 5',
-    title: 'Directorio publico de centros en construccion',
+    badge: 'Centros',
+    title: 'Directorio publico de centros',
     description:
-      'La navegacion publica hacia centros de acopio quedara conectada al mapa y a los detalles operativos en fases posteriores.',
+      'Explora la red de centros de acopio y su informacion operativa desde una vista publica.',
   },
   centerRegister: {
-    badge: 'Fase 5',
-    title: 'Registro de centro reservado para el dashboard',
+    badge: 'Centro',
+    title: 'Registro operativo del centro',
     description:
-      'El formulario completo de centro de acopio se implementara cuando se habilite el panel del rol center.',
+      'El formulario del centro vive dentro del panel operativo para mantener los datos organizados.',
   },
   notFound: {
     badge: '404',
@@ -133,14 +133,14 @@ export const PUBLIC_PAGE_ACTIONS = {
 
 export const AUTH_VIEW_CONTENT = {
   shell: {
-    badge: 'Acceso mock preparado para migracion futura',
-    title: 'Coordina ayuda con un acceso temporal listo para backend real.',
+    badge: 'Acceso seguro',
+    title: 'Ingresa para coordinar ayuda desde tu espacio de trabajo.',
     description:
-      'Esta fase conecta contexto, storage y guards por rol sin inventar endpoints. La UI queda desacoplada para migrar a servicios reales cuando Flask exponga auth.',
+      'El acceso donor y center mantiene la experiencia rapida, clara y lista para continuar el flujo de ayuda sin friccion.',
     highlights: [
-      'Sesiones persistidas en localStorage',
-      'Roles donor y center con redireccion por permiso',
-      'Contratos aislados en context, hooks y service',
+      'Ingreso rapido para donor y center',
+      'Sesiones persistidas entre visitas',
+      'Redireccion segun el rol asignado',
     ],
   },
   shared: {
@@ -159,7 +159,7 @@ export const AUTH_VIEW_CONTENT = {
     authenticatedAction: 'Ir a mi espacio',
   },
   login: {
-    badge: 'Fase 2',
+    badge: 'Ingreso',
     title: 'Inicia sesion como donante o centro de acopio',
     description:
       'Usa una cuenta demo o una registrada localmente para probar guards, persistencia y redireccion por rol.',
@@ -172,7 +172,7 @@ export const AUTH_VIEW_CONTENT = {
     ],
   },
   register: {
-    badge: 'Fase 2',
+    badge: 'Registro',
     title: 'Crea una cuenta mock preparada para donor o center',
     description:
       'El registro guarda usuarios localmente y deja la UI lista para sustituir este flujo por servicios backend cuando existan.',
@@ -198,59 +198,63 @@ export const AUTH_VIEW_CONTENT = {
 
 export const PROTECTED_PAGE_CONTENT = {
   centerDashboard: {
-    badge: 'Fase 5',
-    title: 'Dashboard del centro listo para recibir su logica',
+    badge: 'Centro',
+    title: 'Panel operativo del centro',
     description:
-      'El acceso del rol center ya esta protegido. El registro del centro, necesidades y donaciones llegaran en la Fase 5.',
+      'Aqui se concentra la operacion del centro, desde su perfil hasta el seguimiento de necesidades y donaciones.',
   },
   centerNeeds: {
-    badge: 'Fase 5',
-    title: 'Gestion de necesidades aun no habilitada',
+    badge: 'Necesidades',
+    title: 'Gestion de necesidades del centro',
     description:
-      'La ruta ya existe y esta protegida por rol. La tabla y los cambios de estado se implementaran en la Fase 5.',
+      'El centro puede revisar sus publicaciones y actualizar el estado de cada necesidad segun su cobertura.',
   },
   centerDonations: {
-    badge: 'Fase 5',
-    title: 'Seguimiento de donaciones del centro en preparacion',
+    badge: 'Donaciones',
+    title: 'Seguimiento de donaciones del centro',
     description:
-      'Esta vista quedo reservada para confirmar recepciones y revisar aportes asociados a necesidades del centro.',
+      'Revisa aportes asociados al centro y confirma su avance hasta la recepcion final.',
   },
 }
 
 export const DONOR_MAP_CONTENT = {
   header: {
-    badge: 'Fase 3',
-    title: 'Mapa operativo de centros de acopio',
+    badge: 'Mapa de ayuda',
+    title: 'Encuentra centros de acopio y necesidades cercanas',
     description:
-      'Visualiza centros mock en OpenStreetMap, prioriza cercania y prepara el terreno para el feed completo de necesidades de la Fase 4.',
+      'Explora centros activos, compara distancias reales y detecta rapidamente donde hace mas falta ayuda.',
     backHomeLabel: 'Volver al inicio',
     logoutLabel: 'Cerrar sesion',
-    loadingCentersLabel: 'Cargando centros mock para el mapa.',
+    loadingCentersLabel: 'Cargando centros disponibles.',
     summaryCards: [
       {
-        value: 'Leaflet',
-        label: 'Mapa interactivo desacoplado del backend',
+        id: 'activeCenters',
+        label: 'Centros activos',
       },
       {
-        value: '5 centros',
-        label: 'Cobertura mock inicial para pruebas de proximidad',
+        id: 'activeNeeds',
+        label: 'Necesidades activas',
       },
       {
-        value: 'Geo opcional',
-        label: 'La experiencia no se rompe si el permiso es denegado',
+        id: 'inTransitDonations',
+        label: 'Donaciones en camino',
+      },
+      {
+        id: 'coveredNeeds',
+        label: 'Necesidades cubiertas',
       },
     ],
   },
   mapCard: {
-    badge: 'OpenStreetMap',
-    title: 'Centros visibles y listos para filtrar por cercania',
+    badge: 'Centros activos',
+    title: 'Ubica el mejor punto de entrega',
     description:
-      'Selecciona un centro desde la lista o acepta geolocalizacion para recentrar el mapa en tu ubicacion.',
+      'Activa tu ubicacion para ordenar centros y necesidades por distancia real sin salir del mapa.',
   },
   geolocation: {
     actionLabel: 'Usar mi ubicacion',
     activeLabel: 'Ubicacion aplicada',
-    idleMessage: 'Puedes habilitar tu ubicacion para priorizar centros cercanos.',
+    idleMessage: 'Activa tu ubicacion para ordenar centros y necesidades por cercania.',
     loadingMessage: 'Solicitando permiso y coordenadas del navegador.',
     deniedMessage: 'El permiso de geolocalizacion fue denegado. Puedes seguir usando el mapa manualmente.',
     unavailableMessage:
@@ -270,31 +274,24 @@ export const DONOR_MAP_CONTENT = {
   centerList: {
     title: 'Centros visibles',
     subtitle:
-      'La lista usa datos mock adaptados desde servicios para facilitar el reemplazo por backend real.',
+      'Revisa direccion, tipo de centro y necesidades activas antes de elegir donde donar.',
     selectActionLabel: 'Ver en mapa',
-    nearbyLabel: 'cerca de ti',
-    noDistanceLabel: 'sin distancia calculada',
+    noDistanceLabel: 'Activa ubicacion para ordenar por distancia',
     activeNeedsSuffix: 'necesidades activas',
-  },
-  phaseNote: {
-    badge: 'Fase 5',
-    title: 'El siguiente bloque pertenece al dashboard del centro',
-    description:
-      'La siguiente fase reutilizara este estado de donaciones y necesidades para que el centro gestione publicaciones, estados y recepciones.',
   },
 }
 
 export const DONOR_FEED_CONTENT = {
   section: {
-    badge: 'Fase 4',
-    title: 'Necesidades activas y donaciones en seguimiento',
+    badge: 'Donaciones activas',
+    title: 'Necesidades activas y seguimiento de aportes',
     description:
-      'Esta vista mezcla mapa, filtros y cards de progreso sin acoplarse al backend real. Las donaciones quedan persistidas en storage mock para sostener el flujo del donante.',
+      'Filtra por estado, ciudad, categoria, urgencia o cercania y registra aportes sin perder trazabilidad.',
   },
   filters: {
     title: 'Filtros del feed',
     subtitle:
-      'Filtra por estado, ciudad, categoria, urgencia y cercania usando datos enriquecidos desde centers y needs.',
+      'Si eliges "Cerca de mi", el listado se ordena por distancia real segun tu ubicacion.',
     resetLabel: 'Limpiar filtros',
     allOptionLabel: 'Todas',
     nearbyOptionLabel: 'Cerca de mi',
@@ -302,7 +299,7 @@ export const DONOR_FEED_CONTENT = {
   needsList: {
     title: 'Necesidades publicadas',
     subtitle:
-      'Cada card resume requerimiento, comprometido, recibido y restante antes de abrir el modal de donacion.',
+      'Cada card resume cobertura actual, centro asociado y distancia estimada antes de confirmar tu donacion.',
     emptyTitle: 'No hay necesidades que coincidan con los filtros.',
     emptyDescription:
       'Prueba otro estado, otra ciudad o desactiva el filtro de cercania para ampliar resultados.',
@@ -347,7 +344,7 @@ export const DONOR_FEED_CONTENT = {
 
 export const CENTER_DASHBOARD_CONTENT = {
   shell: {
-    badge: 'Fase 5',
+    badge: 'Centro operativo',
     title: 'Panel operativo del centro de acopio',
     description:
       'Administra el perfil del centro, publica necesidades y confirma donaciones desde un flujo mock listo para migrar a backend real.',

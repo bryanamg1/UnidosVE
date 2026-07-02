@@ -1,7 +1,4 @@
 import L from 'leaflet'
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
-import markerIcon from 'leaflet/dist/images/marker-icon.png'
-import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import { Button, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { CircleMarker, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
@@ -15,10 +12,12 @@ import {
 import MapViewportSync from './MapViewportSync'
 import styles from '../styles/DonorMapPage.module.css'
 
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
+const centerMarkerIcon = L.divIcon({
+  className: styles.centerMarkerShell,
+  html: `<span class="${styles.centerMarkerIcon}"><span class="${styles.centerMarkerCore}"></span></span>`,
+  iconSize: [28, 36],
+  iconAnchor: [14, 36],
+  popupAnchor: [0, -30],
 })
 
 function CentersMap({ activeCenter, centers, userCoordinates }) {
@@ -37,6 +36,7 @@ function CentersMap({ activeCenter, centers, userCoordinates }) {
 
       {centers.map((center) => (
         <Marker
+          icon={centerMarkerIcon}
           key={center.id}
           position={[center.coordinates.lat, center.coordinates.lng]}
         >

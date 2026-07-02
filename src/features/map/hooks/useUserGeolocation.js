@@ -1,12 +1,32 @@
-import { useState } from 'react'
-import { DONOR_MAP_CONTENT, GEOLOCATION_STATUS } from '../../../constants'
+import { useEffect, useRef, useState } from 'react'
+import {
+  DONOR_MAP_CONTENT,
+  GEOLOCATION_STATUS,
+  MAP_NOTIFICATION_TIMEOUT_MS,
+} from '../../../constants'
 
 export function useUserGeolocation() {
   const [status, setStatus] = useState(GEOLOCATION_STATUS.IDLE)
   const [coordinates, setCoordinates] = useState(null)
   const [message, setMessage] = useState(DONOR_MAP_CONTENT.geolocation.idleMessage)
+  const timeoutRef = useRef(null)
+
+  function clearDismissTimeout() {
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      clearDismissTimeout()
+    }
+  }, [])
 
   function requestLocation() {
+    clearDismissTimeout()
+
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
       setStatus(GEOLOCATION_STATUS.UNAVAILABLE)
       setMessage(DONOR_MAP_CONTENT.geolocation.unavailableMessage)
@@ -24,6 +44,11 @@ export function useUserGeolocation() {
         })
         setStatus(GEOLOCATION_STATUS.SUCCESS)
         setMessage(DONOR_MAP_CONTENT.geolocation.activeLabel)
+        timeoutRef.current = window.setTimeout(() => {
+          setStatus(GEOLOCATION_STATUS.IDLE)
+          setMessage(DONOR_MAP_CONTENT.geolocation.idleMessage)
+          timeoutRef.current = null
+        }, MAP_NOTIFICATION_TIMEOUT_MS)
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
@@ -48,6 +73,7 @@ export function useUserGeolocation() {
     requestLocation,
     status,
     isReady: status !== GEOLOCATION_STATUS.LOADING,
+    hasActiveMessage: status !== GEOLOCATION_STATUS.IDLE,
     isUnavailable: status === GEOLOCATION_STATUS.UNAVAILABLE,
   }
 }
