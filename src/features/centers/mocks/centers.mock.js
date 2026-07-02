@@ -12,11 +12,11 @@ export const centersMock = [
     contactPhone: '+58 412-100-1200',
     contactEmail: 'caracasoeste@unidosve.org',
     managerName: 'Mariela Contreras',
-    schedule: 'Lunes a sabado · 08:00 a 18:00',
+    schedule: 'Lunes a sabado - 08:00 a 18:00',
     activeNeeds: [
       'Medicamentos de uso continuo',
       'Agua embotellada',
-      'Pañales y kits de higiene',
+      'Panales y kits de higiene',
     ],
   },
   {
@@ -32,7 +32,7 @@ export const centersMock = [
     contactPhone: '+58 414-220-4820',
     contactEmail: 'valenciasur@unidosve.org',
     managerName: 'Rafael Arcia',
-    schedule: 'Martes a domingo · 09:00 a 17:00',
+    schedule: 'Martes a domingo - 09:00 a 17:00',
     activeNeeds: ['Harina y arroz', 'Proteinas enlatadas', 'Cajas para despacho'],
   },
   {
@@ -48,7 +48,7 @@ export const centersMock = [
     contactPhone: '+58 424-550-9011',
     contactEmail: 'maracaibonorte@unidosve.org',
     managerName: 'Yasmil Rojas',
-    schedule: 'Lunes a viernes · 08:30 a 16:30',
+    schedule: 'Lunes a viernes - 08:30 a 16:30',
     activeNeeds: ['Sueros y gasas', 'Linternas recargables'],
   },
   {
@@ -64,8 +64,8 @@ export const centersMock = [
     contactPhone: '+58 426-640-3390',
     contactEmail: 'barquisimetoeste@unidosve.org',
     managerName: 'Milagros Silva',
-    schedule: 'Lunes a sabado · 07:30 a 15:30',
-    activeNeeds: ['Ropa para niños', 'Cuadernos y lapices', 'Agua potable'],
+    schedule: 'Lunes a sabado - 07:30 a 15:30',
+    activeNeeds: ['Ropa para ninos', 'Cuadernos y lapices', 'Agua potable'],
   },
   {
     id: 'center-puerto-ordaz',
@@ -80,7 +80,7 @@ export const centersMock = [
     contactPhone: '+58 416-731-0048',
     contactEmail: 'puertoordaz@unidosve.org',
     managerName: 'Daniela Perdomo',
-    schedule: 'Todos los dias · 10:00 a 18:00',
+    schedule: 'Todos los dias - 10:00 a 18:00',
     activeNeeds: ['Baterias portatiles', 'Generadores pequenos', 'Cables de extension'],
   },
 ]

@@ -124,3 +124,5 @@ Initial Project Log
 - 2026-07-02: Phase 1 closed after validation with build and lint passing.
 - 2026-07-02: Phase 2 implemented with mock auth, persistent local session storage and route guards by role.
 - 2026-07-02: Phase 3 implemented with a donor map view, mock centers service layer, Leaflet integration and optional geolocation.
+- 2026-07-02: Phase 4 implemented with donor feed filters, mock needs, mock donations and a donation dialog persisted in local storage.
+- 2026-07-02: Phase 4 closed after validation with build and lint passing on branch bryan/feat/donor-feed.
