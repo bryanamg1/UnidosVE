@@ -344,3 +344,83 @@ export const DONOR_FEED_CONTENT = {
     needsError: 'No fue posible cargar las necesidades mock del feed.',
   },
 }
+
+export const CENTER_DASHBOARD_CONTENT = {
+  shell: {
+    badge: 'Fase 5',
+    title: 'Panel operativo del centro de acopio',
+    description:
+      'Administra el perfil del centro, publica necesidades y confirma donaciones desde un flujo mock listo para migrar a backend real.',
+    backHomeLabel: 'Volver al inicio',
+    logoutLabel: 'Cerrar sesion',
+    loadingLabel: 'Cargando panel del centro.',
+    summary: {
+      profileLabel: 'Perfil del centro',
+      needsLabel: 'Necesidades propias',
+      donationsLabel: 'Donaciones asociadas',
+    },
+    tabs: {
+      profile: 'Centro',
+      needs: 'Necesidades',
+      donations: 'Donaciones',
+    },
+  },
+  profile: {
+    title: 'Perfil del centro',
+    description:
+      'Completa o actualiza la informacion operativa del centro para que donor y mapa consuman un contrato estable.',
+    saveLabel: 'Guardar centro',
+    successMessage: 'Perfil del centro guardado correctamente.',
+    emptyMessage:
+      'Todavia no hay un centro asociado a este usuario mock. Completa el formulario para crearlo.',
+    fields: {
+      name: 'Nombre del centro',
+      type: 'Tipo de centro',
+      description: 'Descripcion operativa',
+      address: 'Direccion',
+      city: 'Ciudad',
+      latitude: 'Latitud',
+      longitude: 'Longitud',
+      contactPhone: 'Telefono de contacto',
+      contactEmail: 'Email de contacto',
+      managerName: 'Responsable',
+      authorizationProfile: 'Perfil autorizado',
+      privateCode: 'Codigo privado',
+      schedule: 'Horario',
+    },
+  },
+  needs: {
+    title: 'Necesidades del centro',
+    description:
+      'Publica necesidades nuevas, revisa las existentes y cambia su estado segun cobertura real o recepcion de donaciones.',
+    createLabel: 'Publicar necesidad',
+    emptyMessage: 'Este centro aun no tiene necesidades registradas.',
+    successCreateMessage: 'Necesidad publicada correctamente.',
+    successStatusMessage: 'Estado de necesidad actualizado.',
+    fields: {
+      title: 'Titulo de la necesidad',
+      summary: 'Descripcion breve',
+      category: 'Categoria',
+      urgency: 'Urgencia',
+      status: 'Estado',
+      requiredQuantity: 'Cantidad requerida',
+      unit: 'Unidad',
+    },
+  },
+  donations: {
+    title: 'Donaciones recibidas o en camino',
+    description:
+      'Revisa compromisos asociados a las necesidades del centro y confirma su avance hasta la recepcion final.',
+    emptyMessage: 'Aun no hay donaciones asociadas a este centro.',
+    successStatusMessage: 'Estado de donacion actualizado.',
+    saveStatusLabel: 'Actualizar estado',
+    statusLabel: 'Estado de donacion',
+    donorLabel: 'Donante',
+    noteLabel: 'Nota',
+  },
+  alerts: {
+    genericError: 'No fue posible completar la accion solicitada en el dashboard del centro.',
+    centerRequired:
+      'Necesitas guardar el perfil del centro antes de publicar necesidades o revisar donaciones.',
+  },
+}
