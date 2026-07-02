@@ -6,6 +6,7 @@
 .layout {
   --map-workspace-height: clamp(620px, calc(100vh - 220px), 820px);
   --feed-panel-max-height: clamp(320px, calc(100vh - 280px), 560px);
+  --published-needs-max-height: clamp(540px, calc(100vh - 250px), 860px);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -277,6 +278,14 @@
   min-height: 0;
 }
 
+.feedListCard {
+  min-height: 0;
+}
+
+.feedListCardContent {
+  min-height: 0;
+}
+
 .feedListHeader {
   display: flex;
   justify-content: space-between;
@@ -292,8 +301,25 @@
   gap: 14px;
 }
 
+.publishedNeedsPanel {
+  max-height: var(--published-needs-max-height);
+}
+
 .trackingList {
   max-height: var(--feed-panel-max-height);
+}
+
+.needsList {
+  min-height: 0;
+}
+
+.publishedNeedsPanel {
+  min-height: 0;
+  padding-bottom: 2px;
+}
+
+.needCard {
+  flex-shrink: 0;
 }
 
 .needCardHeader,
@@ -364,6 +390,7 @@
   .layout {
     --map-workspace-height: clamp(560px, calc(100vh - 180px), 760px);
     --feed-panel-max-height: clamp(280px, calc(100vh - 240px), 460px);
+    --published-needs-max-height: clamp(420px, calc(100vh - 220px), 620px);
   }
 
   .mapSection {
@@ -380,7 +407,8 @@
   }
 
   .centersListPanel,
-  .trackingList {
+  .trackingList,
+  .publishedNeedsPanel {
     max-height: min(420px, 48vh);
   }
 }
@@ -457,7 +485,8 @@
   }
 
   .centersListPanel,
-  .trackingList {
+  .trackingList,
+  .publishedNeedsPanel {
     max-height: none;
     padding-right: 0;
   }
