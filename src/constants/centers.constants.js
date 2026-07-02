@@ -21,3 +21,12 @@ export const CENTER_PROFILE_FIELDS = [
   'privateCode',
   'schedule',
 ]
+
+export const CENTER_TYPE_LABELS = {
+  centro_comunitario: 'Centro comunitario',
+  iglesia: 'Iglesia',
+  ong: 'ONG',
+  escuela: 'Escuela',
+  punto_vecinal: 'Punto vecinal',
+  otro: 'Otro',
+}

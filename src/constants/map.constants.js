@@ -4,6 +4,7 @@ export const MAP_DEFAULTS = {
     lng: -66.9036,
   },
   zoom: 6,
+  focusZoom: 12,
   nearbyRadiusKm: 25,
 }
 
@@ -19,4 +20,9 @@ export const GEOLOCATION_STATUS = {
   DENIED: 'denied',
   UNAVAILABLE: 'unavailable',
   ERROR: 'error',
+}
+
+export const MAP_INTERACTION = {
+  userMarkerRadius: 12,
+  centerMarkerRadius: 10,
 }

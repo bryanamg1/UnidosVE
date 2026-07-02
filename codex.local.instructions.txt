@@ -118,3 +118,9 @@ Initial Project Log
 - 2026-07-02: Verified frontend dependencies only include React/Vite baseline.
 - 2026-07-02: Verified backend currently exposes only health, mensajes and usuarios-salvo endpoints.
 - 2026-07-02: Mock-first architecture remains mandatory until backend contracts for centers, needs, donations and auth exist.
+- 2026-07-02: Phase 0 closed with feature-based folder scaffolding, initial constants and local project instructions.
+- 2026-07-02: Pending for a future explicit step: install MUI, Router and Leaflet dependencies.
+- 2026-07-02: Phase 1 implemented with a public landing, centralized copy, theme setup and public placeholder routes.
+- 2026-07-02: Phase 1 closed after validation with build and lint passing.
+- 2026-07-02: Phase 2 implemented with mock auth, persistent local session storage and route guards by role.
+- 2026-07-02: Phase 3 implemented with a donor map view, mock centers service layer, Leaflet integration and optional geolocation.
