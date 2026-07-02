@@ -17,6 +17,7 @@ import {
   APP_ROUTES,
   DONATION_COMMITTED_STATUSES,
   DONATION_RECEIVED_STATUSES,
+  DONATION_STATUSES,
   DONOR_FEED_CONTENT,
   DONOR_MAP_CONTENT,
   GEOLOCATION_STATUS,
@@ -38,7 +39,7 @@ import CenterListPanel from '../components/CenterListPanel'
 import CentersMap from '../components/CentersMap'
 import { useUserGeolocation } from '../hooks/useUserGeolocation'
 import styles from '../styles/DonorMapPage.module.css'
-import { getDistanceKm } from '../utils/mapDistance'
+import { calculateDistanceKm, sortByDistance } from '../utils/mapDistance'
 
 const INITIAL_FILTERS = {
   status: NEED_FILTER_VALUES.ALL,
@@ -81,6 +82,7 @@ function DonorMapPage() {
   } = useDonations()
   const {
     coordinates,
+    hasActiveMessage,
     isReady,
     message,
     requestLocation,
@@ -96,24 +98,12 @@ function DonorMapPage() {
   const centersWithDistance = useMemo(() => {
     const enrichedCenters = centers.map((center) => ({
       ...center,
-      distanceKm: coordinates ? getDistanceKm(coordinates, center.coordinates) : null,
+      distanceKm: coordinates
+        ? calculateDistanceKm(coordinates, center.coordinates)
+        : null,
     }))
 
-    return enrichedCenters.sort((left, right) => {
-      if (left.distanceKm === null && right.distanceKm === null) {
-        return 0
-      }
-
-      if (left.distanceKm === null) {
-        return 1
-      }
-
-      if (right.distanceKm === null) {
-        return -1
-      }
-
-      return left.distanceKm - right.distanceKm
-    })
+    return sortByDistance(enrichedCenters, (center) => center.distanceKm)
   }, [centers, coordinates])
 
   const activeCenter =
@@ -183,7 +173,7 @@ function DonorMapPage() {
   }, [needs, centersWithDistance, donationsByNeed])
 
   const filteredNeeds = useMemo(() => {
-    return enrichedNeeds.filter((need) => {
+    const nextNeeds = enrichedNeeds.filter((need) => {
       if (
         filterValues.status !== NEED_FILTER_VALUES.ALL &&
         need.displayStatus !== filterValues.status
@@ -210,12 +200,18 @@ function DonorMapPage() {
       }
 
       if (filterValues.proximity === NEED_FILTER_VALUES.NEARBY) {
-        return typeof need.distanceKm === 'number' && need.distanceKm <= 25
+        return true
       }
 
       return true
     })
-  }, [enrichedNeeds, filterValues])
+
+    if (filterValues.proximity === NEED_FILTER_VALUES.NEARBY && coordinates) {
+      return sortByDistance(nextNeeds, (need) => need.distanceKm)
+    }
+
+    return nextNeeds
+  }, [coordinates, enrichedNeeds, filterValues])
 
   const donorDonations = useMemo(() => {
     return donations
@@ -272,6 +268,44 @@ function DonorMapPage() {
     ]
   }, [])
 
+  const summaryCards = useMemo(() => {
+    const activeNeedsCount = enrichedNeeds.filter(
+      (need) =>
+        need.displayStatus !== NEED_STATUSES.COVERED &&
+        need.displayStatus !== NEED_STATUSES.CANCELED,
+    ).length
+    const coveredNeedsCount = enrichedNeeds.filter(
+      (need) => need.displayStatus === NEED_STATUSES.COVERED,
+    ).length
+    const inTransitDonationsCount = donations.filter(
+      (donation) =>
+        donation.status === DONATION_STATUSES.PREPARING ||
+        donation.status === DONATION_STATUSES.IN_TRANSIT,
+    ).length
+    const valuesById = {
+      activeCenters: centers.length,
+      activeNeeds: activeNeedsCount,
+      inTransitDonations: inTransitDonationsCount,
+      coveredNeeds: coveredNeedsCount,
+    }
+
+    return DONOR_MAP_CONTENT.header.summaryCards.map((summaryCard) => ({
+      ...summaryCard,
+      value: valuesById[summaryCard.id] ?? 0,
+    }))
+  }, [centers.length, donations, enrichedNeeds])
+
+  const geolocationAlertSeverity =
+    geolocationStatus === GEOLOCATION_STATUS.SUCCESS
+      ? 'success'
+      : geolocationStatus === GEOLOCATION_STATUS.LOADING
+        ? 'info'
+        : geolocationStatus === GEOLOCATION_STATUS.DENIED ||
+            geolocationStatus === GEOLOCATION_STATUS.ERROR ||
+            geolocationStatus === GEOLOCATION_STATUS.UNAVAILABLE
+          ? 'warning'
+          : 'info'
+
   function handleFilterChange(event) {
     const { name, value } = event.target
 
@@ -279,6 +313,15 @@ function DonorMapPage() {
       ...current,
       [name]: value,
     }))
+
+    if (
+      name === 'proximity' &&
+      value === NEED_FILTER_VALUES.NEARBY &&
+      !coordinates &&
+      geolocationStatus !== GEOLOCATION_STATUS.LOADING
+    ) {
+      requestLocation()
+    }
   }
 
   function handleResetFilters() {
@@ -370,7 +413,7 @@ function DonorMapPage() {
           </div>
 
           <div className={styles.summaryGrid}>
-            {DONOR_MAP_CONTENT.header.summaryCards.map((summaryCard) => (
+            {summaryCards.map((summaryCard) => (
               <article key={summaryCard.label} className={styles.summaryCard}>
                 <Typography variant="h5">{summaryCard.value}</Typography>
                 <Typography color="text.secondary" variant="body2">
@@ -402,21 +445,7 @@ function DonorMapPage() {
                 </Button>
               </div>
 
-              <Alert
-                severity={
-                  geolocationStatus === GEOLOCATION_STATUS.SUCCESS
-                    ? 'success'
-                    : geolocationStatus === GEOLOCATION_STATUS.LOADING
-                      ? 'info'
-                      : geolocationStatus === GEOLOCATION_STATUS.DENIED ||
-                          geolocationStatus === GEOLOCATION_STATUS.ERROR ||
-                          geolocationStatus === GEOLOCATION_STATUS.UNAVAILABLE
-                        ? 'warning'
-                        : 'info'
-                }
-              >
-                {message}
-              </Alert>
+              {hasActiveMessage ? <Alert severity={geolocationAlertSeverity}>{message}</Alert> : null}
 
               {centersError ? <Alert severity="error">{centersError}</Alert> : null}
 
@@ -443,16 +472,6 @@ function DonorMapPage() {
               centers={centersWithDistance}
               onSelectCenter={setActiveCenterId}
             />
-
-            <Card className={styles.phaseNoteCard}>
-              <CardContent className={styles.phaseNoteContent}>
-                <Chip label={DONOR_MAP_CONTENT.phaseNote.badge} size="small" variant="outlined" />
-                <Typography variant="h6">{DONOR_MAP_CONTENT.phaseNote.title}</Typography>
-                <Typography color="text.secondary" variant="body2">
-                  {DONOR_MAP_CONTENT.phaseNote.description}
-                </Typography>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
@@ -478,7 +497,7 @@ function DonorMapPage() {
                 urgencyOptions={urgencyOptions}
               />
 
-              <Card className={styles.feedSideCard}>
+              <Card className={`${styles.feedSideCard} ${styles.donationsPanel}`}>
                 <CardContent className={styles.feedSideCardContent}>
                   <div className={styles.sideCardHeader}>
                     <Typography variant="h5">{DONOR_FEED_CONTENT.donorTracking.title}</Typography>
@@ -492,7 +511,7 @@ function DonorMapPage() {
                       <CircularProgress size={22} />
                     </div>
                   ) : donorDonations.length ? (
-                    <div className={styles.trackingList}>
+                    <div className={`${styles.trackingList} ${styles.scrollPanel}`}>
                       {donorDonations.map((donation) => (
                         <DonationTrackerCard donation={donation} key={donation.id} />
                       ))}

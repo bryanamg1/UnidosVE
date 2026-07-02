@@ -1,4 +1,4 @@
-export function getDistanceKm(from, to) {
+export function calculateDistanceKm(from, to) {
   const earthRadiusKm = 6371
   const toRadians = (value) => (value * Math.PI) / 180
 
@@ -17,6 +17,31 @@ export function getDistanceKm(from, to) {
   const arc = 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine))
 
   return earthRadiusKm * arc
+}
+
+export function getDistanceKm(from, to) {
+  return calculateDistanceKm(from, to)
+}
+
+export function sortByDistance(items, getDistanceValue) {
+  return [...items].sort((left, right) => {
+    const leftDistance = getDistanceValue(left)
+    const rightDistance = getDistanceValue(right)
+
+    if (leftDistance === null && rightDistance === null) {
+      return 0
+    }
+
+    if (leftDistance === null) {
+      return 1
+    }
+
+    if (rightDistance === null) {
+      return -1
+    }
+
+    return leftDistance - rightDistance
+  })
 }
 
 export function formatDistance(distanceKm) {

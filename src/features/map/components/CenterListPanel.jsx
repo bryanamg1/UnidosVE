@@ -18,7 +18,7 @@ function CenterListPanel({ activeCenterId, centers, onSelectCenter }) {
         </Typography>
       </div>
 
-      <div className={styles.centerList}>
+      <div className={`${styles.centerList} ${styles.scrollPanel} ${styles.centersListPanel}`}>
         {centers.map((center) => {
           const isActive = center.id === activeCenterId
           const distanceText =
@@ -51,7 +51,7 @@ function CenterListPanel({ activeCenterId, centers, onSelectCenter }) {
                 />
                 <Chip
                   color={isNearby ? 'success' : 'default'}
-                  label={isNearby ? DONOR_MAP_CONTENT.centerList.nearbyLabel : distanceText}
+                  label={distanceText}
                   size="small"
                 />
               </div>
