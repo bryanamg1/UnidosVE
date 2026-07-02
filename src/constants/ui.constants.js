@@ -277,9 +277,70 @@ export const DONOR_MAP_CONTENT = {
     activeNeedsSuffix: 'necesidades activas',
   },
   phaseNote: {
-    badge: 'Fase 4',
-    title: 'El feed de necesidades sigue separado',
+    badge: 'Fase 5',
+    title: 'El siguiente bloque pertenece al dashboard del centro',
     description:
-      'La siguiente fase reutilizara esta base de mapa y auth para incorporar filtros, cards de necesidades y el flujo de donacion.',
+      'La siguiente fase reutilizara este estado de donaciones y necesidades para que el centro gestione publicaciones, estados y recepciones.',
+  },
+}
+
+export const DONOR_FEED_CONTENT = {
+  section: {
+    badge: 'Fase 4',
+    title: 'Necesidades activas y donaciones en seguimiento',
+    description:
+      'Esta vista mezcla mapa, filtros y cards de progreso sin acoplarse al backend real. Las donaciones quedan persistidas en storage mock para sostener el flujo del donante.',
+  },
+  filters: {
+    title: 'Filtros del feed',
+    subtitle:
+      'Filtra por estado, ciudad, categoria, urgencia y cercania usando datos enriquecidos desde centers y needs.',
+    resetLabel: 'Limpiar filtros',
+    allOptionLabel: 'Todas',
+    nearbyOptionLabel: 'Cerca de mi',
+  },
+  needsList: {
+    title: 'Necesidades publicadas',
+    subtitle:
+      'Cada card resume requerimiento, comprometido, recibido y restante antes de abrir el modal de donacion.',
+    emptyTitle: 'No hay necesidades que coincidan con los filtros.',
+    emptyDescription:
+      'Prueba otro estado, otra ciudad o desactiva el filtro de cercania para ampliar resultados.',
+    resultsLabelSuffix: 'resultados',
+  },
+  needCard: {
+    requiredLabel: 'Requerido',
+    committedLabel: 'Comprometido',
+    receivedLabel: 'Recibido',
+    remainingLabel: 'Restante',
+    donateLabel: 'Donar',
+    distanceLabel: 'Distancia',
+    unknownDistanceLabel: 'Sin distancia',
+    centerLabel: 'Centro',
+    updatedLabel: 'Actualizado',
+    progressLabel: 'Cobertura estimada',
+  },
+  donationDialog: {
+    titlePrefix: 'Donar a',
+    description:
+      'Confirma una cantidad estimada para que el centro pueda reflejar tu compromiso en el seguimiento mock.',
+    amountLabel: 'Cantidad comprometida',
+    noteLabel: 'Nota para el centro',
+    notePlaceholder: 'Ejemplo: entrega prevista para el fin de semana.',
+    submitLabel: 'Confirmar donacion',
+    cancelLabel: 'Cancelar',
+    helperSuffix: 'La nueva donacion iniciara en estado comprometida.',
+  },
+  donorTracking: {
+    title: 'Mis donaciones',
+    subtitle:
+      'Aqui ves el estado actual de tus compromisos mock: comprometida, preparando, en camino, recibida o completada.',
+    emptyLabel: 'Todavia no has registrado donaciones mock en esta sesion.',
+    amountLabel: 'Monto comprometido',
+  },
+  alerts: {
+    donationSuccess: 'La donacion mock se registro correctamente.',
+    donationError: 'No fue posible registrar la donacion mock.',
+    needsError: 'No fue posible cargar las necesidades mock del feed.',
   },
 }
