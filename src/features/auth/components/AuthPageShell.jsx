@@ -1,5 +1,7 @@
-import { Chip, Typography } from '@mui/material'
-import { AUTH_VIEW_CONTENT } from '../../../constants'
+import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded'
+import { Button, Chip, Typography } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
+import { APP_ROUTES, AUTH_VIEW_CONTENT } from '../../../constants'
 import styles from '../styles/AuthPage.module.css'
 
 function AuthPageShell({ children }) {
@@ -7,6 +9,16 @@ function AuthPageShell({ children }) {
     <main className={styles.page}>
       <section className={styles.layout}>
         <div className={styles.copyColumn}>
+          <Button
+            className={styles.backHomeButton}
+            component={RouterLink}
+            startIcon={<KeyboardBackspaceRoundedIcon />}
+            to={APP_ROUTES.HOME}
+            variant="text"
+          >
+            {AUTH_VIEW_CONTENT.shared.backHomeLabel}
+          </Button>
+
           <Chip color="primary" label={AUTH_VIEW_CONTENT.shell.badge} size="small" />
 
           <Typography className={styles.title} variant="h2">

@@ -26,3 +26,5 @@ export const MAP_INTERACTION = {
   userMarkerRadius: 12,
   centerMarkerRadius: 10,
 }
+
+export const MAP_NOTIFICATION_TIMEOUT_MS = 3500

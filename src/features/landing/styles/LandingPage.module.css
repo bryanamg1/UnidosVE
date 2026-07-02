@@ -216,6 +216,16 @@
   }
 }
 
+@media (max-width: 900px) {
+  .actionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 720px) {
   .statsGrid,
   .actionsGrid {
@@ -233,5 +243,30 @@
 
   .layout {
     width: min(100%, calc(100% - 24px));
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroActions :global(.MuiButton-root),
+  .actionCardContent :global(.MuiButton-root) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .layout {
+    width: min(100%, calc(100% - 16px));
+    padding: 24px 0 32px;
+  }
+
+  .signalPanel {
+    padding: 20px;
+  }
+
+  .signalCard {
+    padding: 18px;
   }
 }

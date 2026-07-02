@@ -21,6 +21,10 @@
   padding: 24px 0;
 }
 
+.backHomeButton {
+  align-self: flex-start;
+}
+
 .title {
   max-width: 12ch;
 }
@@ -45,6 +49,7 @@
 .formColumn {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .formCard {
@@ -67,5 +72,35 @@
 
   .highlightList {
     grid-template-columns: 1fr;
+  }
+
+  .formColumn {
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 20px 0 28px;
+  }
+
+  .layout {
+    width: min(100%, calc(100% - 20px));
+    gap: 18px;
+  }
+
+  .copyColumn {
+    padding: 8px 0 0;
+  }
+
+  .formCardContent {
+    gap: 16px;
+  }
+
+  .formCardContent :global(.MuiButton-root),
+  .formCardContent :global(.MuiTextField-root),
+  .formCardContent :global(.MuiInputBase-root),
+  .formCardContent :global(.MuiFormControl-root) {
+    width: 100%;
   }
 }
