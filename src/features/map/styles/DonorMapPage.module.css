@@ -171,6 +171,26 @@
   min-width: 220px;
 }
 
+.mapLocateControlShell {
+  margin-top: 12px;
+  margin-right: 12px;
+  z-index: 700;
+  pointer-events: auto;
+}
+
+.mapLocateControlButton {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(170, 183, 209, 0.18);
+  background: rgba(8, 16, 27, 0.92);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+  pointer-events: auto;
+}
+
+.mapLocateControlButton:hover {
+  background: rgba(19, 34, 56, 0.96);
+}
+
 .scrollPanel {
   overflow-y: auto;
   overflow-x: hidden;

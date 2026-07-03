@@ -1,6 +1,6 @@
 .page {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
 }
 
@@ -35,11 +35,12 @@
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-  gap: 28px;
-  align-items: stretch;
+  gap: 14px;
+  align-items: center;
   width: min(1240px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 48px 0;
+  min-height: calc(100svh - 24px);
+  padding: 10px 0 14px;
 }
 
 .copyColumn,
@@ -50,37 +51,38 @@
 .copyColumn {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .title {
   max-width: 12ch;
-  font-size: clamp(3.4rem, 7vw, 6rem);
+  font-size: clamp(2.15rem, 3.5vw, 3.55rem);
+  line-height: 0.92;
 }
 
 .description {
   max-width: 62ch;
-  font-size: 1.02rem;
+  font-size: 0.88rem;
 }
 
 .chipRow {
-  margin-top: -4px;
+  margin-top: -2px;
 }
 
 .heroActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: 8px;
 }
 
 .statCard {
-  padding: 18px;
+  padding: 10px 12px;
   border: 1px solid rgba(170, 183, 209, 0.12);
   border-radius: 24px;
   background: linear-gradient(180deg, rgba(19, 34, 56, 0.88), rgba(10, 20, 34, 0.74));
@@ -88,13 +90,13 @@
 }
 
 .statValue {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .actionsGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 8px;
 }
 
 .actionCard {
@@ -105,7 +107,7 @@
 .actionCardContent {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
 }
 
 .signalPanel {
@@ -113,8 +115,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 720px;
-  padding: 28px;
+  min-height: clamp(340px, 42vh, 430px);
+  padding: 16px;
   border: 1px solid rgba(170, 183, 209, 0.12);
   border-radius: 32px;
   background:
@@ -128,7 +130,7 @@
 .signalHeader {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   max-width: 32rem;
 }
 
@@ -153,7 +155,7 @@
 .signalGrid {
   position: relative;
   display: grid;
-  gap: 18px;
+  gap: 8px;
   width: 100%;
 }
 
@@ -161,8 +163,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 22px;
+  gap: 5px;
+  padding: 12px;
   border: 1px solid rgba(170, 183, 209, 0.12);
   border-radius: 26px;
   background: rgba(6, 13, 24, 0.72);
@@ -170,17 +172,17 @@
 }
 
 .signalCard:nth-child(2) {
-  margin-left: 42px;
+  margin-left: 14px;
 }
 
 .signalCard:nth-child(3) {
-  margin-left: 84px;
+  margin-left: 28px;
 }
 
 .signalCardHeader {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 }
 
@@ -188,9 +190,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   color: #dce7ff;
   background: linear-gradient(135deg, rgba(23, 105, 255, 0.38), rgba(23, 105, 255, 0.08));
 }
@@ -204,6 +206,7 @@
     grid-template-columns: 1fr;
     gap: 20px;
     width: min(1040px, calc(100% - 32px));
+    min-height: 0;
     padding: 32px 0 40px;
   }
 
