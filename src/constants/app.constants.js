@@ -3,7 +3,7 @@ export const APP_CONFIG = {
   shortName: 'UnidosVE',
   tagline: 'Unidos por Venezuela',
   locale: 'es-VE',
-  defaultDataSource: 'mock',
+  defaultDataSource: 'api',
 }
 
 export const DATA_SOURCES = {
@@ -22,7 +22,7 @@ export const APP_PHASES = {
 }
 
 export const PROJECT_STATUS = {
-  backend: 'partial',
-  ui: 'setup_in_progress',
-  mocksRequired: true,
+  backend: 'railway_live',
+  ui: 'operational',
+  mocksRequired: false,
 }

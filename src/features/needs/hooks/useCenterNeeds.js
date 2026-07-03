@@ -59,12 +59,12 @@ export function useCenterNeeds(centerId) {
     }
   }
 
-  async function updateNeedStatus(needId, status) {
+  async function updateNeedStatus(needId, status, options) {
     setIsSubmitting(true)
     setError('')
 
     try {
-      const updatedNeed = await needsService.updateNeedStatus(needId, status)
+      const updatedNeed = await needsService.updateNeedStatus(needId, status, options)
 
       if (updatedNeed) {
         setNeeds((currentNeeds) =>

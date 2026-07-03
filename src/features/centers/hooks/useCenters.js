@@ -23,7 +23,7 @@ export function useCenters() {
           return
         }
 
-        setError('No fue posible cargar los centros mock en este momento.')
+        setError('No fue posible cargar los centros disponibles en este momento.')
       } finally {
         if (isMounted) {
           setIsLoading(false)

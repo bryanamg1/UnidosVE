@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { donationsService } from '../services/donationsService'
 
-export function useDonations() {
+export function useDonations(userId = null) {
   const [donations, setDonations] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -12,7 +12,7 @@ export function useDonations() {
 
     async function loadDonations() {
       try {
-        const response = await donationsService.getDonations()
+        const response = await donationsService.getDonations({ userId })
 
         if (!isMounted) {
           return
@@ -35,7 +35,7 @@ export function useDonations() {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [userId])
 
   async function createDonation(payload) {
     setIsSubmitting(true)
