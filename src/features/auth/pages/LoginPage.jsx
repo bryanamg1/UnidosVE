@@ -1,11 +1,8 @@
 import { useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   APP_ROUTES,
-  AUTH_QUERY_PARAMS,
   AUTH_REDIRECT_BY_ROLE,
-  AUTH_ROLES,
-  AUTH_SUPPORTED_ROLES,
   AUTH_VIEW_CONTENT,
 } from '../../../constants'
 import AuthFormCard from '../components/AuthFormCard'
@@ -27,28 +24,16 @@ const LOGIN_FIELDS = [
     required: true,
     autoComplete: 'current-password',
   },
-  {
-    name: 'role',
-    label: AUTH_VIEW_CONTENT.shared.roleLabel,
-    type: 'select',
-    required: true,
-  },
 ]
 
 function LoginPage() {
   const location = useLocation()
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
   const { login, status, error, clearError } = useAuth()
   const [successMessage, setSuccessMessage] = useState('')
-  const derivedRole = searchParams.get(AUTH_QUERY_PARAMS.ROLE)
-  const initialRole = AUTH_SUPPORTED_ROLES.includes(derivedRole)
-    ? derivedRole
-    : AUTH_ROLES.DONOR
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
-    role: initialRole,
   })
   const infoMessage = location.state?.reason ?? ''
 

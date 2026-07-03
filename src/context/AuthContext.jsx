@@ -8,20 +8,29 @@ import { AuthContext } from './AuthContextInstance'
 
 function mapAuthErrorToMessage(error) {
   if (error instanceof Error) {
-    if (error.message === 'INVALID_CREDENTIALS') {
+    if (error.code === 'INVALID_CREDENTIALS' || error.message === 'INVALID_CREDENTIALS') {
       return AUTH_VIEW_CONTENT.alerts.invalidCredentials
     }
 
-    if (error.message === 'DUPLICATE_EMAIL') {
+    if (error.code === 'DUPLICATE_EMAIL' || error.message === 'DUPLICATE_EMAIL') {
       return AUTH_VIEW_CONTENT.alerts.duplicateEmail
     }
 
-    if (error.message === 'AUTH_FORBIDDEN') {
-      return AUTH_VIEW_CONTENT.alerts.genericError
+    if (error.code === 'AUTH_NETWORK_ERROR') {
+      return AUTH_VIEW_CONTENT.alerts.networkError
     }
 
-    if (error.message === 'AUTH_LOGIN_FAILED' || error.message === 'AUTH_REGISTER_FAILED') {
-      return AUTH_VIEW_CONTENT.alerts.genericError
+    if (error.code === 'AUTH_SERVER_ERROR') {
+      return AUTH_VIEW_CONTENT.alerts.serverError
+    }
+
+    if (
+      error.code === 'AUTH_VALIDATION_ERROR' ||
+      error.code === 'AUTH_FORBIDDEN' ||
+      error.code === 'AUTH_LOGIN_FAILED' ||
+      error.code === 'AUTH_REGISTER_FAILED'
+    ) {
+      return error.message || AUTH_VIEW_CONTENT.alerts.genericError
     }
 
     if (!['INVALID_CREDENTIALS', 'DUPLICATE_EMAIL'].includes(error.message)) {
