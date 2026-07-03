@@ -77,20 +77,107 @@
 
 .actionsGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: 4px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+  align-items: stretch;
 }
 
 .actionCard {
-  border: 1px solid rgba(170, 183, 209, 0.12);
-  background: linear-gradient(180deg, rgba(15, 28, 47, 0.94), rgba(9, 18, 31, 0.82));
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+  min-height: 224px;
+  border: 1px solid rgba(76, 130, 222, 0.26);
+  background:
+    linear-gradient(180deg, rgba(17, 31, 52, 0.96), rgba(8, 16, 27, 0.88)),
+    radial-gradient(circle at top left, rgba(23, 105, 255, 0.12), transparent 40%);
+  box-shadow:
+    0 22px 54px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.actionCard::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, rgba(23, 105, 255, 0.95), rgba(121, 169, 255, 0.22));
+}
+
+.actionCardPrimary {
+  border-color: rgba(86, 147, 255, 0.34);
+  background:
+    linear-gradient(180deg, rgba(18, 34, 58, 0.98), rgba(8, 16, 27, 0.9)),
+    radial-gradient(circle at top left, rgba(23, 105, 255, 0.16), transparent 42%);
+}
+
+.actionCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(121, 169, 255, 0.34);
+  box-shadow:
+    0 26px 62px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .actionCardContent {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+.actionCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actionCardHeader {
+  align-items: flex-start;
+  min-height: 32px;
+}
+
+.actionCardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  color: #dce7ff;
+  border: 1px solid rgba(121, 169, 255, 0.22);
+  background: linear-gradient(135deg, rgba(23, 105, 255, 0.2), rgba(23, 105, 255, 0.04));
+}
+
+.actionButton {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  font-weight: 700;
+  justify-content: center;
+  border-color: rgba(121, 169, 255, 0.28) !important;
+  color: #dce7ff !important;
+  background: rgba(10, 20, 34, 0.26) !important;
+}
+
+.actionButton:hover {
+  border-color: rgba(121, 169, 255, 0.42) !important;
+  background: rgba(17, 31, 52, 0.4) !important;
+}
+
+.actionButtonPrimary {
+  border-color: rgba(121, 169, 255, 0.4) !important;
+  background: linear-gradient(180deg, rgba(23, 105, 255, 0.18), rgba(12, 34, 66, 0.48)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .signalPanel {
@@ -148,10 +235,22 @@
   flex-direction: column;
   gap: 5px;
   padding: 12px;
-  border: 1px solid rgba(170, 183, 209, 0.12);
+  overflow: hidden;
+  border: 1px solid rgba(76, 130, 222, 0.22);
   border-radius: 26px;
-  background: rgba(6, 13, 24, 0.72);
+  background:
+    linear-gradient(180deg, rgba(7, 15, 27, 0.82), rgba(6, 13, 24, 0.7)),
+    radial-gradient(circle at top left, rgba(23, 105, 255, 0.12), transparent 42%);
   backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.signalCard::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, rgba(121, 169, 255, 0.92), rgba(121, 169, 255, 0.18));
 }
 
 .signalCard:nth-child(2) {
@@ -246,6 +345,7 @@
 
   .actionCard {
     width: min(100%, 30rem);
+    min-height: 0;
   }
 
   .actionCardContent :global(.MuiButton-root) {

@@ -1,24 +1,44 @@
+import { CircularProgress } from '@mui/material'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { APP_ROUTES, AUTH_ROLES } from '../constants'
-import LoginPage from '../features/auth/pages/LoginPage'
-import RegisterPage from '../features/auth/pages/RegisterPage'
-import CenterDashboardPage from '../features/dashboard/pages/CenterDashboardPage'
-import DonorMapPage from '../features/map/pages/DonorMapPage'
 import PublicRoute from './PublicRoute'
 import ProtectedRoute from './ProtectedRoute'
 import RoleRoute from './RoleRoute'
-import LandingPage from '../features/landing/pages/LandingPage'
-import PublicPlaceholderPage from '../features/landing/pages/PublicPlaceholderPage'
+
+const LandingPage = lazy(() => import('../features/landing/pages/LandingPage'))
+const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'))
+const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'))
+const CenterDashboardPage = lazy(() => import('../features/dashboard/pages/CenterDashboardPage'))
+const DonorMapPage = lazy(() => import('../features/map/pages/DonorMapPage'))
+const PublicPlaceholderPage = lazy(
+  () => import('../features/landing/pages/PublicPlaceholderPage'),
+)
 
 const PUBLIC_ROUTES = [
   { path: APP_ROUTES.CENTERS, pageKey: 'centers' },
   { path: APP_ROUTES.NOT_FOUND, pageKey: 'notFound' },
 ]
 
+function RouteLoadingFallback() {
+  return (
+    <main
+      style={{
+        minHeight: '100vh',
+        display: 'grid',
+        placeItems: 'center',
+      }}
+    >
+      <CircularProgress size={28} />
+    </main>
+  )
+}
+
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <Routes>
+      <Suspense fallback={<RouteLoadingFallback />}>
+        <Routes>
         <Route
           path={APP_ROUTES.HOME}
           element={
@@ -114,7 +134,8 @@ function AppRoutes() {
         />
 
         <Route path="*" element={<Navigate replace to={APP_ROUTES.NOT_FOUND} />} />
-      </Routes>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }

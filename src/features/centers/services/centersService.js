@@ -15,6 +15,7 @@ function wait(delayMs = 220) {
 }
 
 function readCenterEntries() {
+  // Temporary local fallback while the live centers API can be unavailable.
   if (typeof window === 'undefined') {
     return centersMock
   }
