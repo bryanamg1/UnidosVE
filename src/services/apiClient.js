@@ -3,7 +3,7 @@ import { readStorageItem } from '../features/auth/utils/authStorage'
 import { AUTH_STORAGE_KEYS } from '../constants'
 
 function normalizeBaseUrl(baseUrl) {
-  return baseUrl.replace(/\/+$/, '')
+  return baseUrl.replace(/\/+$/, '').replace(/\/api$/, '')
 }
 
 function buildUrl(pathname, query = {}) {

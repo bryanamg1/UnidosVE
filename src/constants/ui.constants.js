@@ -163,9 +163,10 @@ export const AUTH_VIEW_CONTENT = {
     loginSuccess: 'Sesion iniciada correctamente.',
     registerSuccess: 'Cuenta creada y sesion iniciada.',
     logoutSuccess: 'Sesion cerrada.',
-    invalidCredentials:
-      'No se encontro una cuenta compatible con ese correo, contrasena y rol.',
+    invalidCredentials: 'No se pudo iniciar sesion con el correo y la contrasena ingresados.',
     duplicateEmail: 'Ya existe una cuenta registrada con ese correo.',
+    networkError: 'No fue posible conectar con el servidor.',
+    serverError: 'El servidor no pudo completar la solicitud en este momento.',
     genericError: 'No fue posible completar la accion solicitada.',
     authRequired: 'Debes iniciar sesion para acceder a esta vista.',
     unauthorizedDonor:

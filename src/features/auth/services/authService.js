@@ -11,6 +11,12 @@ const LEGACY_AUTH_STORAGE_KEYS = [
   'unidosve.auth.source',
 ]
 
+function createAuthFlowError(code, message = code) {
+  const error = new Error(message)
+  error.code = code
+  return error
+}
+
 function sanitizeUser(user) {
   if (!user) {
     return null
@@ -58,31 +64,53 @@ function normalizeAuthError(error, fallbackCode) {
     return error
   }
 
+  const fieldMessages = error.fields && typeof error.fields === 'object'
+    ? Object.values(error.fields)
+        .flatMap((value) => (Array.isArray(value) ? value : [value]))
+        .filter(Boolean)
+    : []
+
   if (error.status === 401) {
-    return new Error('INVALID_CREDENTIALS')
+    return createAuthFlowError('INVALID_CREDENTIALS')
   }
 
   if (error.status === 409) {
-    return new Error('DUPLICATE_EMAIL')
+    return createAuthFlowError('DUPLICATE_EMAIL')
   }
 
   if (error.status === 403) {
-    return new Error('AUTH_FORBIDDEN')
+    return createAuthFlowError(
+      'AUTH_FORBIDDEN',
+      error.message || 'No tienes permisos para completar esta accion.',
+    )
   }
 
-  if (error.status === 400 && error.message) {
-    return new Error(error.message)
+  if (error.status === 400) {
+    const validationMessage = fieldMessages.length
+      ? fieldMessages.join(' ')
+      : error.message || 'Datos invalidos.'
+
+    return createAuthFlowError('AUTH_VALIDATION_ERROR', validationMessage)
   }
 
-  return new Error(fallbackCode)
+  if (error.status === 0) {
+    return createAuthFlowError('AUTH_NETWORK_ERROR', error.message)
+  }
+
+  if (error.status >= 500) {
+    return createAuthFlowError('AUTH_SERVER_ERROR', error.message)
+  }
+
+  return createAuthFlowError(fallbackCode, error.message || fallbackCode)
 }
 
 async function loginWithApi(credentials) {
-  const response = await apiClient.post(API_ENDPOINTS.auth.login, {
+  const loginPayload = {
     email: credentials.email.trim().toLowerCase(),
     password: credentials.password,
-    role: credentials.role,
-  })
+  }
+
+  const response = await apiClient.post(API_ENDPOINTS.auth.login, loginPayload)
 
   return persistApiSession(response)
 }
