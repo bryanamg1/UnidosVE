@@ -51,7 +51,7 @@ export function useCenterProfile(user) {
     setError('')
 
     try {
-      const nextCenter = await centersService.saveCenterProfile(user, payload, center?.id ?? null)
+      const nextCenter = await centersService.saveCenterProfile(payload, center?.id ?? null)
       setCenter(nextCenter)
       return nextCenter
     } catch {

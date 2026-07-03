@@ -471,6 +471,8 @@ function DonorMapPage() {
             <CenterListPanel
               activeCenterId={activeCenter?.id ?? ''}
               centers={centersWithDistance}
+              error={centersError}
+              isLoading={isCentersLoading}
               onSelectCenter={setActiveCenterId}
             />
           </div>

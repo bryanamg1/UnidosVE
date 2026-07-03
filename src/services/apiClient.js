@@ -72,14 +72,6 @@ export function isApiError(error) {
   return error?.name === 'ApiError'
 }
 
-export function shouldFallbackToMock(error) {
-  if (!isApiError(error)) {
-    return false
-  }
-
-  return error.status === 0 || error.status === 404 || error.status >= 500
-}
-
 export function extractCollection(responsePayload) {
   if (Array.isArray(responsePayload)) {
     return responsePayload
