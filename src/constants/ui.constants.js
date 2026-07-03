@@ -251,6 +251,10 @@ export const DONOR_MAP_CONTENT = {
     description:
       'Activa tu ubicacion para ordenar centros y necesidades por distancia real sin salir del mapa.',
   },
+  mapControls: {
+    centerUserLabel: 'Centrar mi ubicacion',
+    centerUserAriaLabel: 'Centrar el mapa en mi ubicacion actual',
+  },
   geolocation: {
     actionLabel: 'Usar mi ubicacion',
     activeLabel: 'Ubicacion aplicada',

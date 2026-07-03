@@ -30,41 +30,48 @@ export function useUserGeolocation() {
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
       setStatus(GEOLOCATION_STATUS.UNAVAILABLE)
       setMessage(DONOR_MAP_CONTENT.geolocation.unavailableMessage)
-      return
+      return Promise.resolve(null)
     }
 
     setStatus(GEOLOCATION_STATUS.LOADING)
     setMessage(DONOR_MAP_CONTENT.geolocation.loadingMessage)
 
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setCoordinates({
-          lat: coords.latitude,
-          lng: coords.longitude,
-        })
-        setStatus(GEOLOCATION_STATUS.SUCCESS)
-        setMessage(DONOR_MAP_CONTENT.geolocation.activeLabel)
-        timeoutRef.current = window.setTimeout(() => {
-          setStatus(GEOLOCATION_STATUS.IDLE)
-          setMessage(DONOR_MAP_CONTENT.geolocation.idleMessage)
-          timeoutRef.current = null
-        }, MAP_NOTIFICATION_TIMEOUT_MS)
-      },
-      (error) => {
-        if (error.code === error.PERMISSION_DENIED) {
-          setStatus(GEOLOCATION_STATUS.DENIED)
-          setMessage(DONOR_MAP_CONTENT.geolocation.deniedMessage)
-          return
-        }
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          const nextCoordinates = {
+            lat: coords.latitude,
+            lng: coords.longitude,
+          }
 
-        setStatus(GEOLOCATION_STATUS.ERROR)
-        setMessage(DONOR_MAP_CONTENT.geolocation.errorMessage)
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-      },
-    )
+          setCoordinates(nextCoordinates)
+          setStatus(GEOLOCATION_STATUS.SUCCESS)
+          setMessage(DONOR_MAP_CONTENT.geolocation.activeLabel)
+          timeoutRef.current = window.setTimeout(() => {
+            setStatus(GEOLOCATION_STATUS.IDLE)
+            setMessage(DONOR_MAP_CONTENT.geolocation.idleMessage)
+            timeoutRef.current = null
+          }, MAP_NOTIFICATION_TIMEOUT_MS)
+          resolve(nextCoordinates)
+        },
+        (error) => {
+          if (error.code === error.PERMISSION_DENIED) {
+            setStatus(GEOLOCATION_STATUS.DENIED)
+            setMessage(DONOR_MAP_CONTENT.geolocation.deniedMessage)
+            resolve(null)
+            return
+          }
+
+          setStatus(GEOLOCATION_STATUS.ERROR)
+          setMessage(DONOR_MAP_CONTENT.geolocation.errorMessage)
+          resolve(null)
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+        },
+      )
+    })
   }
 
   return {

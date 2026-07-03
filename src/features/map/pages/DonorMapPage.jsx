@@ -460,6 +460,7 @@ function DonorMapPage() {
                 <CentersMap
                   activeCenter={activeCenter}
                   centers={centersWithDistance}
+                  onRequestLocation={requestLocation}
                   userCoordinates={coordinates}
                 />
               )}
