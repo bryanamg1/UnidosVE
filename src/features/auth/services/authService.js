@@ -1,25 +1,15 @@
-import {
-  API_ENDPOINTS,
-  AUTH_MOCK_SEED_USERS,
-  AUTH_STORAGE_KEYS,
-} from '../../../constants'
+import { API_ENDPOINTS, AUTH_STORAGE_KEYS } from '../../../constants'
 import {
   readStorageItem,
   removeStorageItem,
   writeStorageItem,
 } from '../utils/authStorage'
-import {
-  apiClient,
-  extractEntity,
-  isApiError,
-  shouldFallbackToMock,
-} from '../../../services/apiClient'
+import { apiClient, extractEntity, isApiError } from '../../../services/apiClient'
 
-function wait(delayMs = 250) {
-  return new Promise((resolve) => {
-    window.setTimeout(resolve, delayMs)
-  })
-}
+const LEGACY_AUTH_STORAGE_KEYS = [
+  'unidosve.auth.users',
+  'unidosve.auth.source',
+]
 
 function sanitizeUser(user) {
   if (!user) {
@@ -31,25 +21,13 @@ function sanitizeUser(user) {
   return safeUser
 }
 
-function getStoredUsers() {
-  // Temporary local fallback while the live auth flow can be unavailable.
-  const storedUsers = readStorageItem(AUTH_STORAGE_KEYS.USERS, null)
-
-  if (Array.isArray(storedUsers) && storedUsers.length > 0) {
-    return storedUsers
-  }
-
-  writeStorageItem(AUTH_STORAGE_KEYS.USERS, AUTH_MOCK_SEED_USERS)
-  return AUTH_MOCK_SEED_USERS
+function getAccessToken() {
+  return readStorageItem(AUTH_STORAGE_KEYS.ACCESS_TOKEN, null)
 }
 
-function persistSession(user) {
-  const safeUser = sanitizeUser(user)
-
-  writeStorageItem(AUTH_STORAGE_KEYS.SESSION, safeUser)
-  writeStorageItem(AUTH_STORAGE_KEYS.ROLE, safeUser?.role ?? null)
-
-  return safeUser
+function buildSessionFromStorage() {
+  const session = readStorageItem(AUTH_STORAGE_KEYS.SESSION, null)
+  return sanitizeUser(session)
 }
 
 function persistApiSession(payload) {
@@ -60,19 +38,8 @@ function persistApiSession(payload) {
   writeStorageItem(AUTH_STORAGE_KEYS.ROLE, safeUser?.role ?? null)
   writeStorageItem(AUTH_STORAGE_KEYS.ACCESS_TOKEN, payload?.accessToken ?? null)
   writeStorageItem(AUTH_STORAGE_KEYS.REFRESH_TOKEN, payload?.refreshToken ?? null)
-  writeStorageItem(AUTH_STORAGE_KEYS.SOURCE, 'api')
 
   return safeUser
-}
-
-function buildSessionFromStorage() {
-  const session = readStorageItem(AUTH_STORAGE_KEYS.SESSION, null)
-
-  if (!session) {
-    return null
-  }
-
-  return session
 }
 
 function clearPersistedSession() {
@@ -80,7 +47,10 @@ function clearPersistedSession() {
   removeStorageItem(AUTH_STORAGE_KEYS.ROLE)
   removeStorageItem(AUTH_STORAGE_KEYS.ACCESS_TOKEN)
   removeStorageItem(AUTH_STORAGE_KEYS.REFRESH_TOKEN)
-  removeStorageItem(AUTH_STORAGE_KEYS.SOURCE)
+
+  LEGACY_AUTH_STORAGE_KEYS.forEach((storageKey) => {
+    removeStorageItem(storageKey)
+  })
 }
 
 function normalizeAuthError(error, fallbackCode) {
@@ -130,10 +100,11 @@ async function registerWithApi(payload) {
 }
 
 async function restoreApiSession() {
-  const accessToken = readStorageItem(AUTH_STORAGE_KEYS.ACCESS_TOKEN, null)
+  const accessToken = getAccessToken()
 
   if (!accessToken) {
-    return buildSessionFromStorage()
+    clearPersistedSession()
+    return null
   }
 
   const response = await apiClient.get(API_ENDPOINTS.auth.me, {
@@ -149,24 +120,13 @@ async function restoreApiSession() {
 
 export const authService = {
   bootstrap() {
-    return buildSessionFromStorage()
+    return getAccessToken() ? buildSessionFromStorage() : null
   },
 
   async restoreSession() {
-    const source = readStorageItem(AUTH_STORAGE_KEYS.SOURCE, null)
-
-    if (source !== 'api') {
-      getStoredUsers()
-      return buildSessionFromStorage()
-    }
-
     try {
       return await restoreApiSession()
-    } catch (error) {
-      if (shouldFallbackToMock(error)) {
-        return buildSessionFromStorage()
-      }
-
+    } catch {
       clearPersistedSession()
       return null
     }
@@ -176,71 +136,23 @@ export const authService = {
     try {
       return await loginWithApi(credentials)
     } catch (error) {
-      if (!shouldFallbackToMock(error)) {
-        throw normalizeAuthError(error, 'AUTH_LOGIN_FAILED')
-      }
+      throw normalizeAuthError(error, 'AUTH_LOGIN_FAILED')
     }
-
-    await wait()
-
-    const users = getStoredUsers()
-    const normalizedEmail = credentials.email.trim().toLowerCase()
-    const user = users.find(
-      (candidate) =>
-        candidate.email.toLowerCase() === normalizedEmail &&
-        candidate.password === credentials.password &&
-        candidate.role === credentials.role,
-    )
-
-    if (!user) {
-      throw new Error('INVALID_CREDENTIALS')
-    }
-
-    writeStorageItem(AUTH_STORAGE_KEYS.SOURCE, 'mock')
-    return persistSession(user)
   },
 
   async register(payload) {
     try {
       return await registerWithApi(payload)
     } catch (error) {
-      if (!shouldFallbackToMock(error)) {
-        throw normalizeAuthError(error, 'AUTH_REGISTER_FAILED')
-      }
+      throw normalizeAuthError(error, 'AUTH_REGISTER_FAILED')
     }
-
-    await wait()
-
-    const users = getStoredUsers()
-    const normalizedEmail = payload.email.trim().toLowerCase()
-    const duplicateUser = users.find(
-      (candidate) => candidate.email.toLowerCase() === normalizedEmail,
-    )
-
-    if (duplicateUser) {
-      throw new Error('DUPLICATE_EMAIL')
-    }
-
-    const newUser = {
-      id: `mock-${payload.role}-${Date.now()}`,
-      firstName: payload.firstName.trim(),
-      lastName: payload.lastName.trim(),
-      email: normalizedEmail,
-      password: payload.password,
-      role: payload.role,
-    }
-
-    writeStorageItem(AUTH_STORAGE_KEYS.USERS, [...users, newUser])
-    writeStorageItem(AUTH_STORAGE_KEYS.SOURCE, 'mock')
-
-    return persistSession(newUser)
   },
 
   async logout() {
-    const source = readStorageItem(AUTH_STORAGE_KEYS.SOURCE, null)
+    const accessToken = getAccessToken()
 
-    if (source === 'api') {
-      try {
+    try {
+      if (accessToken) {
         await apiClient.post(
           API_ENDPOINTS.auth.logout,
           {},
@@ -248,13 +160,11 @@ export const authService = {
             requiresAuth: true,
           },
         )
-      } catch (error) {
-        if (!shouldFallbackToMock(error)) {
-          throw normalizeAuthError(error, 'AUTH_LOGOUT_FAILED')
-        }
       }
+    } catch (error) {
+      throw normalizeAuthError(error, 'AUTH_LOGOUT_FAILED')
+    } finally {
+      clearPersistedSession()
     }
-
-    clearPersistedSession()
   },
 }

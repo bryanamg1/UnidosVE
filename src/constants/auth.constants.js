@@ -20,10 +20,8 @@ export const AUTH_QUERY_PARAMS = {
 export const AUTH_STORAGE_KEYS = {
   SESSION: 'unidosve.auth.session',
   ROLE: 'unidosve.auth.role',
-  USERS: 'unidosve.auth.users',
   ACCESS_TOKEN: 'unidosve.auth.accessToken',
   REFRESH_TOKEN: 'unidosve.auth.refreshToken',
-  SOURCE: 'unidosve.auth.source',
 }
 
 export const AUTH_PERMISSION_MATRIX = {
@@ -51,25 +49,6 @@ export const AUTH_REDIRECT_BY_ROLE = {
   [AUTH_ROLES.DONOR]: APP_ROUTES.DONATE,
   [AUTH_ROLES.CENTER]: APP_ROUTES.CENTER_DASHBOARD,
 }
-
-export const AUTH_MOCK_SEED_USERS = [
-  {
-    id: 'mock-donor-001',
-    firstName: 'Lucia',
-    lastName: 'Gomez',
-    email: 'donor@unidosve.org',
-    password: 'demo123',
-    role: AUTH_ROLES.DONOR,
-  },
-  {
-    id: 'mock-center-001',
-    firstName: 'Centro',
-    lastName: 'Caracas Oeste',
-    email: 'centro@unidosve.org',
-    password: 'demo123',
-    role: AUTH_ROLES.CENTER,
-  },
-]
 
 export const AUTH_SESSION_STATUS = {
   IDLE: 'idle',

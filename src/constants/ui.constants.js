@@ -258,6 +258,9 @@ export const DONOR_MAP_CONTENT = {
     title: 'Centros visibles',
     subtitle:
       'Revisa direccion, tipo de centro y necesidades activas antes de elegir donde donar.',
+    loadingLabel: 'Cargando centros visibles.',
+    errorLabel: 'No fue posible cargar los centros visibles en este momento.',
+    emptyLabel: 'No hay centros disponibles para mostrar en este momento.',
     selectActionLabel: 'Ver en mapa',
     noDistanceLabel: 'Activa ubicacion para ordenar por distancia',
     activeNeedsSuffix: 'necesidades activas',

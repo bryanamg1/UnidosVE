@@ -1,5 +1,5 @@
 import PlaceRoundedIcon from '@mui/icons-material/PlaceRounded'
-import { Button, Chip, Stack, Typography } from '@mui/material'
+import { Alert, Button, Chip, CircularProgress, Stack, Typography } from '@mui/material'
 import {
   CENTER_TYPE_LABELS,
   DONOR_MAP_CONTENT,
@@ -20,7 +20,13 @@ function getCenterAccentClass(isActive, isNearby) {
   return styles.surfaceAccentMuted
 }
 
-function CenterListPanel({ activeCenterId, centers, onSelectCenter }) {
+function CenterListPanel({
+  activeCenterId,
+  centers,
+  error = '',
+  isLoading = false,
+  onSelectCenter,
+}) {
   return (
     <section className={styles.sideCard}>
       <div className={styles.sideCardHeader}>
@@ -31,53 +37,66 @@ function CenterListPanel({ activeCenterId, centers, onSelectCenter }) {
       </div>
 
       <div className={`${styles.centerList} ${styles.scrollPanel} ${styles.centersListPanel}`}>
-        {centers.map((center) => {
-          const isActive = center.id === activeCenterId
-          const distanceText =
-            typeof center.distanceKm === 'number'
-              ? formatDistance(center.distanceKm)
-              : DONOR_MAP_CONTENT.centerList.noDistanceLabel
-          const isNearby =
-            typeof center.distanceKm === 'number' &&
-            center.distanceKm <= MAP_DEFAULTS.nearbyRadiusKm
+        {isLoading ? (
+          <div className={styles.inlineLoadingState}>
+            <CircularProgress size={22} />
+            <Typography color="text.secondary" variant="body2">
+              {DONOR_MAP_CONTENT.centerList.loadingLabel}
+            </Typography>
+          </div>
+        ) : error ? (
+          <Alert severity="error">{DONOR_MAP_CONTENT.centerList.errorLabel}</Alert>
+        ) : centers.length ? (
+          centers.map((center) => {
+            const isActive = center.id === activeCenterId
+            const distanceText =
+              typeof center.distanceKm === 'number'
+                ? formatDistance(center.distanceKm)
+                : DONOR_MAP_CONTENT.centerList.noDistanceLabel
+            const isNearby =
+              typeof center.distanceKm === 'number' &&
+              center.distanceKm <= MAP_DEFAULTS.nearbyRadiusKm
 
-          return (
-            <article
-              key={center.id}
-              className={`${styles.centerListItem} ${styles.surfaceAccent} ${getCenterAccentClass(isActive, isNearby)} ${isActive ? styles.centerListItemActive : ''}`}
-            >
-              <Stack direction="row" justifyContent="space-between" spacing={1.5}>
-                <Typography variant="h6">{center.name}</Typography>
-                <PlaceRoundedIcon color={isActive ? 'primary' : 'inherit'} fontSize="small" />
-              </Stack>
+            return (
+              <article
+                key={center.id}
+                className={`${styles.centerListItem} ${styles.surfaceAccent} ${getCenterAccentClass(isActive, isNearby)} ${isActive ? styles.centerListItemActive : ''}`}
+              >
+                <Stack direction="row" justifyContent="space-between" spacing={1.5}>
+                  <Typography variant="h6">{center.name}</Typography>
+                  <PlaceRoundedIcon color={isActive ? 'primary' : 'inherit'} fontSize="small" />
+                </Stack>
 
-              <Typography color="text.secondary" variant="body2">
-                {center.address}
-              </Typography>
+                <Typography color="text.secondary" variant="body2">
+                  {center.address}
+                </Typography>
 
-              <div className={styles.centerMetaRow}>
-                <Chip
-                  label={CENTER_TYPE_LABELS[center.type] ?? center.type}
-                  size="small"
-                  variant="outlined"
-                />
-                <Chip
-                  color={isNearby ? 'success' : 'default'}
-                  label={distanceText}
-                  size="small"
-                />
-              </div>
+                <div className={styles.centerMetaRow}>
+                  <Chip
+                    label={CENTER_TYPE_LABELS[center.type] ?? center.type}
+                    size="small"
+                    variant="outlined"
+                  />
+                  <Chip
+                    color={isNearby ? 'success' : 'default'}
+                    label={distanceText}
+                    size="small"
+                  />
+                </div>
 
-              <Typography color="text.secondary" variant="body2">
-                {center.activeNeedsCount} {DONOR_MAP_CONTENT.centerList.activeNeedsSuffix}
-              </Typography>
+                <Typography color="text.secondary" variant="body2">
+                  {center.activeNeedsCount} {DONOR_MAP_CONTENT.centerList.activeNeedsSuffix}
+                </Typography>
 
-              <Button onClick={() => onSelectCenter(center.id)} variant="text">
-                {DONOR_MAP_CONTENT.centerList.selectActionLabel}
-              </Button>
-            </article>
-          )
-        })}
+                <Button onClick={() => onSelectCenter(center.id)} variant="text">
+                  {DONOR_MAP_CONTENT.centerList.selectActionLabel}
+                </Button>
+              </article>
+            )
+          })
+        ) : (
+          <Alert severity="info">{DONOR_MAP_CONTENT.centerList.emptyLabel}</Alert>
+        )}
       </div>
     </section>
   )

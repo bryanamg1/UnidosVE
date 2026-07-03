@@ -153,15 +153,18 @@
   flex-direction: column;
   gap: 12px;
   min-height: 0;
+  align-items: stretch;
 }
 
 .centerListItem {
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
   padding: 16px;
+  min-height: 176px;
+  flex-shrink: 0;
   border: 1px solid var(--card-border-subtle);
   border-radius: 22px;
   background: rgba(6, 13, 24, 0.58);
@@ -238,7 +241,15 @@
 }
 
 .centersListPanel {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 100%;
+  padding-bottom: 2px;
+}
+
+.centerListItem :global(.MuiButton-root) {
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 .centerMarkerShell {
