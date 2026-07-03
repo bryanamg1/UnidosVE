@@ -46,8 +46,8 @@ function LoginPage() {
     ? derivedRole
     : AUTH_ROLES.DONOR
   const [formValues, setFormValues] = useState({
-    email: 'donor@unidosve.org',
-    password: 'demo123',
+    email: '',
+    password: '',
     role: initialRole,
   })
   const infoMessage = location.state?.reason ?? ''

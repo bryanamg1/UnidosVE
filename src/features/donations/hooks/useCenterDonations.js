@@ -43,12 +43,16 @@ export function useCenterDonations(centerId) {
     }
   }, [centerId])
 
-  async function updateDonationStatus(donationId, status) {
+  async function updateDonationStatus(donationId, status, options) {
     setIsSubmitting(true)
     setError('')
 
     try {
-      const updatedDonation = await donationsService.updateDonationStatus(donationId, status)
+      const updatedDonation = await donationsService.updateDonationStatus(
+        donationId,
+        status,
+        options,
+      )
 
       if (updatedDonation) {
         setDonations((currentDonations) =>

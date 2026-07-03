@@ -1,8 +1,15 @@
 import {
+  API_ENDPOINTS,
   CENTER_STORAGE_KEYS,
   NEED_STATUSES,
   NEED_STORAGE_KEYS,
 } from '../../../constants'
+import {
+  apiClient,
+  extractCollection,
+  extractEntity,
+  shouldFallbackToMock,
+} from '../../../services/apiClient'
 import { adaptNeed } from '../adapters/needAdapter'
 import { needsMock } from '../mocks/needs.mock'
 
@@ -82,23 +89,38 @@ function syncCenterActiveNeeds(centerId, needEntries) {
 
 export const needsService = {
   async getPublishedNeeds() {
+    try {
+      const response = await apiClient.get(API_ENDPOINTS.needs.list)
+      return extractCollection(response).map(adaptNeed)
+    } catch (error) {
+      if (!shouldFallbackToMock(error)) {
+        throw error
+      }
+    }
+
     await wait()
     return readNeedEntries().map(adaptNeed)
   },
 
   async getCenterNeeds(centerId) {
+    try {
+      const response = await apiClient.get(API_ENDPOINTS.centers.needs(centerId), {
+        requiresAuth: true,
+      })
+
+      return extractCollection(response).map(adaptNeed)
+    } catch (error) {
+      if (!shouldFallbackToMock(error)) {
+        throw error
+      }
+    }
+
     await wait()
-    return readNeedEntries()
-      .filter((need) => need.centerId === centerId)
-      .map(adaptNeed)
+    return readNeedEntries().filter((need) => need.centerId === centerId).map(adaptNeed)
   },
 
   async createNeed(payload) {
-    await wait()
-
-    const entries = readNeedEntries()
-    const nextNeed = {
-      id: `need-${payload.centerId}-${Date.now()}`,
+    const nextNeedPayload = {
       centerId: payload.centerId,
       title: payload.title.trim(),
       summary: payload.summary.trim(),
@@ -109,26 +131,64 @@ export const needsService = {
       committedQuantity: 0,
       receivedQuantity: 0,
       unit: payload.unit.trim(),
+    }
+
+    try {
+      const response = await apiClient.post(API_ENDPOINTS.needs.list, nextNeedPayload, {
+        requiresAuth: true,
+      })
+
+      return adaptNeed(extractEntity(response))
+    } catch (error) {
+      if (!shouldFallbackToMock(error)) {
+        throw error
+      }
+    }
+
+    await wait()
+
+    const entries = readNeedEntries()
+    const nextNeed = {
+      id: `need-${payload.centerId}-${Date.now()}`,
+      ...nextNeedPayload,
       updatedAt: new Date().toISOString(),
     }
 
     const nextEntries = [nextNeed, ...entries]
     writeNeedEntries(nextEntries)
     syncCenterActiveNeeds(payload.centerId, nextEntries)
-
     return adaptNeed(nextNeed)
   },
 
-  async updateNeedStatus(needId, status) {
+  async updateNeedStatus(needId, status, options = {}) {
+    const body = {
+      status,
+      ...(typeof options.receivedQuantity === 'number'
+        ? { receivedQuantity: options.receivedQuantity }
+        : {}),
+      ...(options.centerAccessCode
+        ? { centerAccessCode: options.centerAccessCode.trim() }
+        : {}),
+    }
+
+    try {
+      const response = await apiClient.patch(API_ENDPOINTS.needs.status(needId), body, {
+        requiresAuth: true,
+      })
+
+      return adaptNeed(extractEntity(response))
+    } catch (error) {
+      if (!shouldFallbackToMock(error)) {
+        throw error
+      }
+    }
+
     await wait()
 
     const entries = readNeedEntries()
     const nextEntries = entries.map((need) =>
-      need.id === needId
-        ? { ...need, status, updatedAt: new Date().toISOString() }
-        : need,
+      need.id === needId ? { ...need, status, updatedAt: new Date().toISOString() } : need,
     )
-
     const updatedNeed = nextEntries.find((need) => need.id === needId)
     writeNeedEntries(nextEntries)
 

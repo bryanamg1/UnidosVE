@@ -79,7 +79,7 @@ function DonorMapPage() {
     isLoading: isDonationsLoading,
     isSubmitting,
     createDonation,
-  } = useDonations()
+  } = useDonations(user?.id)
   const {
     coordinates,
     hasActiveMessage,

@@ -238,7 +238,7 @@ function CenterDashboardPage() {
     isSaving: isCenterSaving,
     error: centerError,
     saveCenterProfile,
-  } = useCenterProfile(user?.id)
+  } = useCenterProfile(user)
   const centerId = center?.id ?? null
   const {
     needs,
@@ -330,13 +330,18 @@ function CenterDashboardPage() {
 
   async function handleNeedStatusSave(needId) {
     const nextStatus = needStatusDrafts[needId]
+    const activeNeed = needs.find((need) => need.id === needId)
 
-    if (!nextStatus) {
+    if (!nextStatus || !activeNeed) {
       return
     }
 
     try {
-      await updateNeedStatus(needId, nextStatus)
+      await updateNeedStatus(needId, nextStatus, {
+        centerAccessCode: center?.privateCode ?? '',
+        receivedQuantity:
+          nextStatus === NEED_STATUSES.COVERED ? activeNeed.baseProgress.required : undefined,
+      })
       setFeedback({
         type: 'success',
         message: CENTER_DASHBOARD_CONTENT.needs.successStatusMessage,
@@ -351,13 +356,21 @@ function CenterDashboardPage() {
 
   async function handleDonationStatusSave(donationId) {
     const nextStatus = donationStatusDrafts[donationId]
+    const activeDonation = donations.find((donation) => donation.id === donationId)
 
-    if (!nextStatus) {
+    if (!nextStatus || !activeDonation) {
       return
     }
 
     try {
-      await updateDonationStatus(donationId, nextStatus)
+      await updateDonationStatus(donationId, nextStatus, {
+        centerAccessCode: center?.privateCode ?? '',
+        receivedQuantity:
+          nextStatus === DONATION_STATUSES.RECEIVED ||
+          nextStatus === DONATION_STATUSES.COMPLETED
+            ? activeDonation.amount
+            : undefined,
+      })
       setFeedback({
         type: 'success',
         message: CENTER_DASHBOARD_CONTENT.donations.successStatusMessage,
