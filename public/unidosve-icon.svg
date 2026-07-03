@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="48" y1="32" x2="464" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1B3D"/>
+      <stop offset="1" stop-color="#030B1E"/>
+    </linearGradient>
+    <filter id="shadow" x="104" y="66" width="304" height="392" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <clipPath id="pinClip">
+      <path d="M256 92C191.383 92 139 143.322 139 206.633C139 285.204 222.289 378.307 246.717 404.079C251.61 409.241 260.39 409.241 265.283 404.079C289.711 378.307 373 285.204 373 206.633C373 143.322 320.617 92 256 92Z"/>
+    </clipPath>
+  </defs>
+
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="176" fill="#123B82" fill-opacity="0.12"/>
+
+  <g filter="url(#shadow)">
+    <g clip-path="url(#pinClip)">
+      <rect x="139" y="92" width="234" height="104" fill="#F4D03F"/>
+      <rect x="139" y="196" width="234" height="104" fill="#0C4AA0"/>
+      <rect x="139" y="300" width="234" height="104" fill="#C62828"/>
+
+      <ellipse cx="256" cy="158" rx="96" ry="54" fill="white" fill-opacity="0.08"/>
+
+      <g fill="white">
+        <circle cx="190" cy="230" r="7"/>
+        <circle cx="208" cy="214" r="7"/>
+        <circle cx="231" cy="203" r="7"/>
+        <circle cx="256" cy="199" r="7"/>
+        <circle cx="281" cy="203" r="7"/>
+        <circle cx="304" cy="214" r="7"/>
+        <circle cx="322" cy="230" r="7"/>
+      </g>
+
+      <path d="M256 281.5C238 267.3 224 255.1 224 236C224 221.088 236.088 209 251 209C259.613 209 267.284 213.029 272 219.299C276.716 213.029 284.387 209 293 209C307.912 209 320 221.088 320 236C320 255.1 306 267.3 288 281.5L272 294L256 281.5Z" fill="white" fill-opacity="0.92"/>
+    </g>
+
+    <path d="M256 92C191.383 92 139 143.322 139 206.633C139 285.204 222.289 378.307 246.717 404.079C251.61 409.241 260.39 409.241 265.283 404.079C289.711 378.307 373 285.204 373 206.633C373 143.322 320.617 92 256 92Z" fill="none" stroke="white" stroke-width="14" stroke-linejoin="round"/>
+    <circle cx="256" cy="236" r="78" fill="none" stroke="white" stroke-opacity="0.2" stroke-width="6"/>
+  </g>
+
+  <path d="M103 126L126 126L112 156H136L95 213L107 172H84L103 126Z" fill="#5A8FFF" fill-opacity="0.9"/>
+</svg>
