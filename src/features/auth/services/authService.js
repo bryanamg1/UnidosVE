@@ -32,6 +32,7 @@ function sanitizeUser(user) {
 }
 
 function getStoredUsers() {
+  // Temporary local fallback while the live auth flow can be unavailable.
   const storedUsers = readStorageItem(AUTH_STORAGE_KEYS.USERS, null)
 
   if (Array.isArray(storedUsers) && storedUsers.length > 0) {

@@ -1,6 +1,5 @@
 import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded'
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded'
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded'
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded'
 import { Button, Card, CardContent, Stack, Typography } from '@mui/material'
@@ -9,7 +8,6 @@ import styles from '../styles/LandingPage.module.css'
 
 const ACTION_ICONS = {
   center: BusinessRoundedIcon,
-  donate: FavoriteRoundedIcon,
   login: LoginRoundedIcon,
   register: PersonAddAltRoundedIcon,
 }
@@ -19,23 +17,37 @@ function LandingActions({ actions }) {
     <div className={styles.actionsGrid}>
       {actions.map((action) => {
         const Icon = ACTION_ICONS[action.id] ?? ArrowOutwardRoundedIcon
+        const isCenterAction = action.id === 'center'
 
         return (
-          <Card key={action.id} className={styles.actionCard}>
+          <Card
+            key={action.id}
+            className={`${styles.actionCard} ${isCenterAction ? styles.actionCardPrimary : ''}`}
+          >
             <CardContent className={styles.actionCardContent}>
-              <Stack direction="row" justifyContent="space-between" spacing={2}>
-                <Typography variant="h6">{action.label}</Typography>
-                <Icon fontSize="small" />
-              </Stack>
+              <div className={styles.actionCardBody}>
+                <Stack
+                  className={styles.actionCardHeader}
+                  direction="row"
+                  justifyContent="space-between"
+                  spacing={2}
+                >
+                  <Typography variant="h6">{action.label}</Typography>
+                  <span className={styles.actionCardIcon}>
+                    <Icon fontSize="small" />
+                  </span>
+                </Stack>
 
-              <Typography color="text.secondary" variant="body2">
-                {action.description}
-              </Typography>
+                <Typography color="text.secondary" variant="body2">
+                  {action.description}
+                </Typography>
+              </div>
 
               <Button
+                className={`${styles.actionButton} ${isCenterAction ? styles.actionButtonPrimary : ''}`}
                 component={RouterLink}
                 to={action.to}
-                variant={action.variant}
+                variant="outlined"
               >
                 {action.label}
               </Button>

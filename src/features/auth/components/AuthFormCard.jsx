@@ -43,13 +43,6 @@ function AuthFormCard({
         {error ? <Alert severity="error">{error}</Alert> : null}
         {successMessage ? <Alert severity="success">{successMessage}</Alert> : null}
 
-        {mode.demoAccounts?.length ? (
-          <Alert severity="info">
-            <strong>{AUTH_VIEW_CONTENT.shared.demoTitle}:</strong>{' '}
-            {mode.demoAccounts.join(' | ')}
-          </Alert>
-        ) : null}
-
         <Stack component="form" spacing={2.25} onSubmit={onSubmit}>
           {fields.map((field) => {
             if (field.type === 'select') {

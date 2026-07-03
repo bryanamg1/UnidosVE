@@ -10,11 +10,31 @@ import {
 import {
   CENTER_TYPE_LABELS,
   DONOR_FEED_CONTENT,
+  NEED_STATUSES,
   NEED_STATUS_COLORS,
   NEED_STATUS_LABELS,
 } from '../../../constants'
 import { formatDistance } from '../../map/utils/mapDistance'
 import styles from '../../map/styles/DonorMapPage.module.css'
+
+function getNeedAccentClass(need) {
+  if (need.displayStatus === NEED_STATUSES.CRITICAL || need.urgency === 'critica') {
+    return styles.surfaceAccentCritical
+  }
+
+  if (
+    need.displayStatus === NEED_STATUSES.PARTIALLY_COVERED ||
+    need.displayStatus === NEED_STATUSES.IN_TRANSIT
+  ) {
+    return styles.surfaceAccentWarning
+  }
+
+  if (need.displayStatus === NEED_STATUSES.COVERED) {
+    return styles.surfaceAccentSuccess
+  }
+
+  return styles.surfaceAccentInfo
+}
 
 function NeedCard({ need, onDonate }) {
   const coverageRatio = Math.min(
@@ -23,7 +43,7 @@ function NeedCard({ need, onDonate }) {
   )
 
   return (
-    <Card className={styles.needCard}>
+    <Card className={`${styles.needCard} ${styles.surfaceAccent} ${getNeedAccentClass(need)}`}>
       <CardContent className={styles.needCardContent}>
         <div className={styles.needCardHeader}>
           <div className={styles.needCardCopy}>

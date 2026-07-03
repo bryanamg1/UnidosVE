@@ -8,6 +8,18 @@ import {
 import { formatDistance } from '../utils/mapDistance'
 import styles from '../styles/DonorMapPage.module.css'
 
+function getCenterAccentClass(isActive, isNearby) {
+  if (isActive) {
+    return styles.surfaceAccentInfo
+  }
+
+  if (isNearby) {
+    return styles.surfaceAccentSuccess
+  }
+
+  return styles.surfaceAccentMuted
+}
+
 function CenterListPanel({ activeCenterId, centers, onSelectCenter }) {
   return (
     <section className={styles.sideCard}>
@@ -32,7 +44,7 @@ function CenterListPanel({ activeCenterId, centers, onSelectCenter }) {
           return (
             <article
               key={center.id}
-              className={`${styles.centerListItem} ${isActive ? styles.centerListItemActive : ''}`}
+              className={`${styles.centerListItem} ${styles.surfaceAccent} ${getCenterAccentClass(isActive, isNearby)} ${isActive ? styles.centerListItemActive : ''}`}
             >
               <Stack direction="row" justifyContent="space-between" spacing={1.5}>
                 <Typography variant="h6">{center.name}</Typography>
