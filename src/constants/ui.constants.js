@@ -26,13 +26,13 @@ export const UI_THEME_TOKENS = {
 }
 
 export const LANDING_CONTENT = {
-  badge: 'Red humanitaria en coordinacion',
+  badge: 'Ayuda coordinada para Venezuela',
   title: 'Activa ayuda concreta para Venezuela desde una sola plataforma.',
   description:
-    'UnidosVE organiza centros de acopio, necesidades activas y donaciones trazables sin depender todavia de un backend completo. Esta primera etapa prioriza claridad, velocidad y una arquitectura lista para crecer.',
+    'UnidosVE conecta centros de acopio, necesidades activas y donaciones con seguimiento claro para responder mas rapido donde la ayuda hace falta.',
   cta: {
-    primaryLabel: 'Explorar flujo de ayuda',
-    secondaryLabel: 'Ver futura red de centros',
+    primaryLabel: 'Explorar necesidades activas',
+    secondaryLabel: 'Ver centros disponibles',
   },
   highlightChips: [
     'Centros cercanos',
@@ -40,63 +40,63 @@ export const LANDING_CONTENT = {
     'Donaciones con seguimiento',
   ],
   stats: [
-    { value: '24h', label: 'Visibilidad operacional continua' },
-    { value: '3 roles', label: 'Donante, centro y usuario publico' },
-    { value: 'Mock-first', label: 'Arquitectura lista para backend real' },
+    { value: 'Centros', label: 'Puntos de entrega visibles en el mapa' },
+    { value: 'Necesidades', label: 'Prioridades publicadas por cada centro' },
+    { value: 'Donaciones', label: 'Seguimiento claro desde el compromiso hasta la entrega' },
   ],
   actions: [
     {
       id: 'center',
       label: 'Soy centro de acopio',
-      description: 'Registra tu centro y prepara la publicacion de necesidades.',
+      description: 'Registra tu centro y publica necesidades para recibir apoyo organizado.',
       to: `${APP_ROUTES.REGISTER}?${AUTH_QUERY_PARAMS.ROLE}=${AUTH_ROLES.CENTER}`,
       variant: 'contained',
     },
     {
       id: 'login',
       label: 'Login',
-      description: 'Acceso preparado para el flujo mock de la siguiente fase.',
+      description: 'Ingresa a tu cuenta para continuar coordinando ayuda.',
       to: APP_ROUTES.LOGIN,
       variant: 'outlined',
     },
     {
       id: 'register',
       label: 'Registrar',
-      description: 'Crea una cuenta donor o center cuando la fase de auth este habilitada.',
+      description: 'Crea una cuenta donor o center para participar en la red de ayuda.',
       to: APP_ROUTES.REGISTER,
       variant: 'outlined',
     },
     {
       id: 'donate',
       label: 'Donar',
-      description: 'Explora el recorrido que llevara al feed de necesidades y mapa.',
+      description: 'Consulta el mapa, revisa necesidades activas y compromete tu aporte.',
       to: APP_ROUTES.DONATE,
       variant: 'text',
     },
   ],
   workflowCards: [
     {
-      eyebrow: 'Centro operativo',
-      title: 'Caracas Oeste',
-      detail: 'Solicita medicamentos, agua y kits de higiene con prioridad critica.',
-      status: 'Critica',
+      eyebrow: 'Centro activo',
+      title: 'Centros listos para recibir apoyo',
+      detail: 'Consulta direccion, horario y capacidad operativa antes de coordinar tu entrega.',
+      status: 'En operacion',
     },
     {
-      eyebrow: 'Donacion en curso',
-      title: '12 entregas comprometidas',
-      detail: 'Seguimiento planeado por estados: comprometida, en camino y recibida.',
-      status: 'En seguimiento',
+      eyebrow: 'Necesidades visibles',
+      title: 'Prioridades claras por categoria y urgencia',
+      detail: 'Identifica rapidamente que hace falta, en que ciudad y con que nivel de urgencia.',
+      status: 'Actualizadas',
     },
     {
-      eyebrow: 'Mapa de ayuda',
-      title: 'Cobertura por proximidad',
-      detail: 'Visualiza centros cercanos y filtra por urgencia cuando el mapa se habilite.',
-      status: 'Cobertura activa',
+      eyebrow: 'Donaciones trazables',
+      title: 'Seguimiento del aporte hasta su recepcion',
+      detail: 'Mantiene visibilidad del compromiso, traslado y recepcion para cada donacion.',
+      status: 'Seguimiento activo',
     },
   ],
   signalPanel: {
-    badge: 'Vista previa operativa',
-    title: 'Una landing publica pensada para convertir interes en coordinacion real.',
+    badge: 'Coordinacion activa',
+    title: 'Prioriza centros, necesidades y donaciones desde una vista clara y accionable.',
   },
 }
 
@@ -136,10 +136,10 @@ export const AUTH_VIEW_CONTENT = {
     badge: 'Acceso seguro',
     title: 'Ingresa para coordinar ayuda desde tu espacio de trabajo.',
     description:
-      'El acceso donor y center mantiene la experiencia rapida, clara y lista para continuar el flujo de ayuda sin friccion.',
+      'Accede como donor o center para continuar con el flujo de ayuda sin perder trazabilidad.',
     highlights: [
-      'Ingreso rapido para donor y center',
-      'Sesiones persistidas entre visitas',
+      'Ingreso para donor y center',
+      'Sesion persistida entre visitas',
       'Redireccion segun el rol asignado',
     ],
   },
@@ -150,43 +150,39 @@ export const AUTH_VIEW_CONTENT = {
     firstNameLabel: 'Nombre',
     lastNameLabel: 'Apellido',
     submitLoading: 'Procesando...',
-    demoTitle: 'Credenciales demo',
+    demoTitle: 'Credenciales',
     logoutLabel: 'Cerrar sesion',
     backHomeLabel: 'Volver al inicio',
     authenticatedTitle: 'Ya tienes una sesion activa.',
     authenticatedDescription:
-      'Tu acceso mock ya esta resuelto. Puedes continuar hacia la vista asignada a tu rol.',
+      'Puedes continuar directamente hacia la vista asignada a tu rol.',
     authenticatedAction: 'Ir a mi espacio',
   },
   login: {
     badge: 'Ingreso',
     title: 'Inicia sesion como donante o centro de acopio',
     description:
-      'Usa una cuenta demo o una registrada localmente para probar guards, persistencia y redireccion por rol.',
+      'Ingresa con tu cuenta para acceder al mapa, las necesidades publicadas o el panel del centro.',
     submitLabel: 'Entrar',
-    secondaryPrompt: 'Aun no tienes acceso mock?',
+    secondaryPrompt: 'Aun no tienes una cuenta?',
     secondaryActionLabel: 'Crear cuenta',
-    demoAccounts: [
-      'donor@unidosve.org / demo123',
-      'centro@unidosve.org / demo123',
-    ],
   },
   register: {
     badge: 'Registro',
-    title: 'Crea una cuenta mock preparada para donor o center',
+    title: 'Crea una cuenta para donor o center',
     description:
-      'El registro guarda usuarios localmente y deja la UI lista para sustituir este flujo por servicios backend cuando existan.',
-    submitLabel: 'Crear cuenta mock',
-    secondaryPrompt: 'Ya tienes una cuenta mock?',
+      'Registra tus datos para comenzar a donar o administrar un centro dentro de UnidosVE.',
+    submitLabel: 'Crear cuenta',
+    secondaryPrompt: 'Ya tienes una cuenta?',
     secondaryActionLabel: 'Ir a login',
   },
   alerts: {
     loginSuccess: 'Sesion iniciada correctamente.',
-    registerSuccess: 'Cuenta mock creada y sesion iniciada.',
+    registerSuccess: 'Cuenta creada y sesion iniciada.',
     logoutSuccess: 'Sesion cerrada.',
     invalidCredentials:
-      'No se encontro una cuenta mock compatible con ese correo, contrasena y rol.',
-    duplicateEmail: 'Ya existe una cuenta mock registrada con ese correo.',
+      'No se encontro una cuenta compatible con ese correo, contrasena y rol.',
+    duplicateEmail: 'Ya existe una cuenta registrada con ese correo.',
     genericError: 'No fue posible completar la accion solicitada.',
     authRequired: 'Debes iniciar sesion para acceder a esta vista.',
     unauthorizedDonor:
@@ -324,7 +320,7 @@ export const DONOR_FEED_CONTENT = {
   donationDialog: {
     titlePrefix: 'Donar a',
     description:
-      'Confirma una cantidad estimada para que el centro pueda reflejar tu compromiso en el seguimiento mock.',
+      'Confirma una cantidad estimada para que el centro pueda reflejar tu compromiso en el seguimiento.',
     amountLabel: 'Cantidad comprometida',
     noteLabel: 'Nota para el centro',
     notePlaceholder: 'Ejemplo: entrega prevista para el fin de semana.',
@@ -335,14 +331,14 @@ export const DONOR_FEED_CONTENT = {
   donorTracking: {
     title: 'Mis donaciones',
     subtitle:
-      'Aqui ves el estado actual de tus compromisos mock: comprometida, preparando, en camino, recibida o completada.',
-    emptyLabel: 'Todavia no has registrado donaciones mock en esta sesion.',
+      'Aqui ves el estado actual de tus compromisos: comprometida, preparando, en camino, recibida o completada.',
+    emptyLabel: 'Todavia no has registrado donaciones en esta cuenta.',
     amountLabel: 'Monto comprometido',
   },
   alerts: {
-    donationSuccess: 'La donacion mock se registro correctamente.',
-    donationError: 'No fue posible registrar la donacion mock.',
-    needsError: 'No fue posible cargar las necesidades mock del feed.',
+    donationSuccess: 'La donacion se registro correctamente.',
+    donationError: 'No fue posible registrar la donacion.',
+    needsError: 'No fue posible cargar las necesidades del feed.',
   },
 }
 
@@ -351,7 +347,7 @@ export const CENTER_DASHBOARD_CONTENT = {
     badge: 'Centro operativo',
     title: 'Panel operativo del centro de acopio',
     description:
-      'Administra el perfil del centro, publica necesidades y confirma donaciones desde un flujo mock listo para migrar a backend real.',
+      'Administra el perfil del centro, publica necesidades y confirma donaciones desde un flujo operativo unificado.',
     backHomeLabel: 'Volver al inicio',
     logoutLabel: 'Cerrar sesion',
     loadingLabel: 'Cargando panel del centro.',
@@ -373,7 +369,7 @@ export const CENTER_DASHBOARD_CONTENT = {
     saveLabel: 'Guardar centro',
     successMessage: 'Perfil del centro guardado correctamente.',
     emptyMessage:
-      'Todavia no hay un centro asociado a este usuario mock. Completa el formulario para crearlo.',
+      'Todavia no hay un centro asociado a este usuario. Completa el formulario para crearlo.',
     fields: {
       name: 'Nombre del centro',
       type: 'Tipo de centro',

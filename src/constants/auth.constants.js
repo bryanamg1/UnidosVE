@@ -21,6 +21,9 @@ export const AUTH_STORAGE_KEYS = {
   SESSION: 'unidosve.auth.session',
   ROLE: 'unidosve.auth.role',
   USERS: 'unidosve.auth.users',
+  ACCESS_TOKEN: 'unidosve.auth.accessToken',
+  REFRESH_TOKEN: 'unidosve.auth.refreshToken',
+  SOURCE: 'unidosve.auth.source',
 }
 
 export const AUTH_PERMISSION_MATRIX = {

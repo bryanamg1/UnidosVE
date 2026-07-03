@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { centersService } from '../services/centersService'
 
-export function useCenterProfile(ownerUserId) {
+export function useCenterProfile(user) {
   const [center, setCenter] = useState(null)
-  const [isLoading, setIsLoading] = useState(Boolean(ownerUserId))
+  const [isLoading, setIsLoading] = useState(Boolean(user?.id))
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -11,13 +11,13 @@ export function useCenterProfile(ownerUserId) {
     let isMounted = true
 
     async function loadCenterProfile() {
-      if (!ownerUserId) {
+      if (!user?.id) {
         setIsLoading(false)
         return
       }
 
       try {
-        const response = await centersService.getCenterByOwner(ownerUserId)
+        const response = await centersService.getCenterByOwner(user)
 
         if (!isMounted) {
           return
@@ -40,10 +40,10 @@ export function useCenterProfile(ownerUserId) {
     return () => {
       isMounted = false
     }
-  }, [ownerUserId])
+  }, [user])
 
   async function saveCenterProfile(payload) {
-    if (!ownerUserId) {
+    if (!user?.id) {
       return null
     }
 
@@ -51,7 +51,7 @@ export function useCenterProfile(ownerUserId) {
     setError('')
 
     try {
-      const nextCenter = await centersService.saveCenterProfile(ownerUserId, payload)
+      const nextCenter = await centersService.saveCenterProfile(user, payload, center?.id ?? null)
       setCenter(nextCenter)
       return nextCenter
     } catch {
