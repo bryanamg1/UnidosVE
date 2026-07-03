@@ -20,6 +20,7 @@ function wait(delayMs = 180) {
 }
 
 function readNeedEntries() {
+  // Temporary local fallback while the live needs API can be unavailable.
   if (typeof window === 'undefined') {
     return needsMock
   }

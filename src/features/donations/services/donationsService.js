@@ -19,6 +19,7 @@ function wait(delayMs = 180) {
 }
 
 function readDonationEntries() {
+  // Temporary local fallback while the live donations API can be unavailable.
   if (typeof window === 'undefined') {
     return donationsMock
   }

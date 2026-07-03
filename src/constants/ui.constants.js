@@ -57,13 +57,6 @@ export const LANDING_CONTENT = {
       to: APP_ROUTES.REGISTER,
       variant: 'outlined',
     },
-    {
-      id: 'donate',
-      label: 'Donar',
-      description: 'Consulta el mapa, revisa necesidades activas y compromete tu aporte.',
-      to: APP_ROUTES.DONATE,
-      variant: 'text',
-    },
   ],
   workflowCards: [
     {
@@ -141,7 +134,6 @@ export const AUTH_VIEW_CONTENT = {
     firstNameLabel: 'Nombre',
     lastNameLabel: 'Apellido',
     submitLoading: 'Procesando...',
-    demoTitle: 'Credenciales',
     logoutLabel: 'Cerrar sesion',
     backHomeLabel: 'Volver al inicio',
     authenticatedTitle: 'Ya tienes una sesion activa.',
@@ -283,6 +275,13 @@ export const DONOR_FEED_CONTENT = {
     title: 'Filtros del feed',
     subtitle:
       'Si eliges "Cerca de mi", el listado se ordena por distancia real segun tu ubicacion.',
+    fieldLabels: {
+      status: 'Estado',
+      city: 'Ciudad',
+      category: 'Categoria',
+      urgency: 'Urgencia',
+      proximity: 'Cercania',
+    },
     resetLabel: 'Limpiar filtros',
     allOptionLabel: 'Todas',
     nearbyOptionLabel: 'Cerca de mi',

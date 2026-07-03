@@ -227,6 +227,38 @@ function getActiveTab(pathname) {
   return 'profile'
 }
 
+function getNeedCardTone(status) {
+  if (status === NEED_STATUSES.CRITICAL) {
+    return styles.workspaceCardCritical
+  }
+
+  if (status === NEED_STATUSES.COVERED) {
+    return styles.workspaceCardSuccess
+  }
+
+  if (status === NEED_STATUSES.PARTIALLY_COVERED || status === NEED_STATUSES.IN_TRANSIT) {
+    return styles.workspaceCardWarning
+  }
+
+  return styles.workspaceCardInfo
+}
+
+function getDonationCardTone(status) {
+  if (status === DONATION_STATUSES.RECEIVED || status === DONATION_STATUSES.COMPLETED) {
+    return styles.workspaceCardSuccess
+  }
+
+  if (status === DONATION_STATUSES.PREPARING || status === DONATION_STATUSES.IN_TRANSIT) {
+    return styles.workspaceCardWarning
+  }
+
+  if (status === DONATION_STATUSES.CANCELED) {
+    return styles.workspaceCardCritical
+  }
+
+  return styles.workspaceCardInfo
+}
+
 function CenterDashboardPage() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -602,7 +634,10 @@ function CenterDashboardPage() {
                 ) : needs.length ? (
                   <div className={styles.cardList}>
                     {needs.map((need) => (
-                      <article className={styles.workspaceCard} key={need.id}>
+                      <article
+                        className={`${styles.workspaceCard} ${getNeedCardTone(need.status)}`}
+                        key={need.id}
+                      >
                         <Stack direction="row" justifyContent="space-between" spacing={1}>
                           <Typography variant="h6">{need.title}</Typography>
                           <Chip
@@ -674,7 +709,10 @@ function CenterDashboardPage() {
               ) : donationCards.length ? (
                 <div className={styles.cardList}>
                   {donationCards.map((donation) => (
-                    <article className={styles.workspaceCard} key={donation.id}>
+                    <article
+                      className={`${styles.workspaceCard} ${getDonationCardTone(donation.status)}`}
+                      key={donation.id}
+                    >
                       <Stack direction="row" justifyContent="space-between" spacing={1}>
                         <Typography variant="h6">{donation.needTitle}</Typography>
                         <Chip

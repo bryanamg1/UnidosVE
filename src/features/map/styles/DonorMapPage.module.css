@@ -7,6 +7,12 @@
   --map-workspace-height: clamp(620px, calc(100vh - 220px), 820px);
   --feed-panel-max-height: clamp(320px, calc(100vh - 280px), 560px);
   --published-needs-max-height: clamp(540px, calc(100vh - 250px), 860px);
+  --card-border-subtle: rgba(170, 183, 209, 0.14);
+  --card-border-blue: rgba(76, 130, 222, 0.3);
+  --card-accent-blue: rgba(23, 105, 255, 0.9);
+  --card-accent-red: rgba(214, 69, 69, 0.86);
+  --card-accent-amber: rgba(240, 164, 59, 0.88);
+  --card-accent-green: rgba(41, 179, 106, 0.88);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -19,7 +25,7 @@
   flex-direction: column;
   gap: 18px;
   padding: 28px;
-  border: 1px solid rgba(170, 183, 209, 0.12);
+  border: 1px solid var(--card-border-subtle);
   border-radius: 30px;
   background:
     linear-gradient(180deg, rgba(19, 34, 56, 0.92), rgba(8, 16, 27, 0.96)),
@@ -52,9 +58,11 @@
 
 .summaryCard {
   padding: 18px;
-  border: 1px solid rgba(170, 183, 209, 0.1);
+  border: 1px solid rgba(76, 130, 222, 0.16);
   border-radius: 22px;
-  background: rgba(7, 14, 24, 0.5);
+  background:
+    linear-gradient(180deg, rgba(10, 20, 34, 0.72), rgba(7, 14, 24, 0.52)),
+    radial-gradient(circle at top left, rgba(23, 105, 255, 0.12), transparent 40%);
 }
 
 .mapSection {
@@ -66,9 +74,13 @@
 
 .mapCard,
 .sideCard {
-  border: 1px solid rgba(170, 183, 209, 0.12);
-  background: linear-gradient(180deg, rgba(15, 28, 47, 0.96), rgba(8, 16, 27, 0.94));
-  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.24);
+  border: 1px solid var(--card-border-blue);
+  background:
+    linear-gradient(180deg, rgba(15, 28, 47, 0.96), rgba(8, 16, 27, 0.94)),
+    radial-gradient(circle at top left, rgba(23, 105, 255, 0.12), transparent 34%);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .mapCardContent {
@@ -144,18 +156,32 @@
 }
 
 .centerListItem {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 16px;
-  border: 1px solid rgba(170, 183, 209, 0.1);
+  border: 1px solid var(--card-border-subtle);
   border-radius: 22px;
   background: rgba(6, 13, 24, 0.58);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .centerListItemActive {
   border-color: rgba(23, 105, 255, 0.5);
-  box-shadow: inset 0 0 0 1px rgba(23, 105, 255, 0.22);
+  box-shadow:
+    inset 0 0 0 1px rgba(23, 105, 255, 0.22),
+    0 16px 36px rgba(0, 0, 0, 0.18);
+}
+
+.centerListItem:hover,
+.needCard:hover,
+.trackingItem:hover {
+  transform: translateY(-2px);
 }
 
 .centerMetaRow {
@@ -281,9 +307,13 @@
 .feedSideCard,
 .feedListCard,
 .needCard {
-  border: 1px solid rgba(170, 183, 209, 0.12);
-  background: linear-gradient(180deg, rgba(15, 28, 47, 0.96), rgba(8, 16, 27, 0.94));
-  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.24);
+  border: 1px solid var(--card-border-blue);
+  background:
+    linear-gradient(180deg, rgba(15, 28, 47, 0.96), rgba(8, 16, 27, 0.94)),
+    radial-gradient(circle at top left, rgba(23, 105, 255, 0.11), transparent 36%);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .feedSideCardContent,
@@ -339,6 +369,8 @@
 }
 
 .needCard {
+  position: relative;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
@@ -375,11 +407,20 @@
 .needMetaItem,
 .progressMetric,
 .trackingItem {
+  position: relative;
   padding: 14px;
-  border: 1px solid rgba(170, 183, 209, 0.1);
+  border: 1px solid var(--card-border-subtle);
   border-radius: 20px;
   background: rgba(6, 13, 24, 0.58);
   min-width: 0;
+}
+
+.trackingItem {
+  overflow: hidden;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .progressBar {
@@ -404,6 +445,83 @@
 
 .donationsPanel {
   min-height: 0;
+}
+
+.filterField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filterLabel {
+  color: #8fb8ff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.surfaceAccent {
+  position: relative;
+  overflow: hidden;
+}
+
+.surfaceAccent::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  opacity: 0.94;
+}
+
+.surfaceAccentInfo {
+  border-color: rgba(76, 130, 222, 0.28) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(23, 105, 255, 0.08);
+}
+
+.surfaceAccentInfo::before {
+  background: linear-gradient(180deg, var(--card-accent-blue), rgba(121, 169, 255, 0.2));
+}
+
+.surfaceAccentCritical {
+  border-color: rgba(214, 69, 69, 0.28) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(214, 69, 69, 0.08);
+}
+
+.surfaceAccentCritical::before {
+  background: linear-gradient(180deg, var(--card-accent-red), rgba(214, 69, 69, 0.18));
+}
+
+.surfaceAccentWarning {
+  border-color: rgba(240, 164, 59, 0.28) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(240, 164, 59, 0.08);
+}
+
+.surfaceAccentWarning::before {
+  background: linear-gradient(180deg, var(--card-accent-amber), rgba(240, 164, 59, 0.18));
+}
+
+.surfaceAccentSuccess {
+  border-color: rgba(41, 179, 106, 0.28) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(41, 179, 106, 0.08);
+}
+
+.surfaceAccentSuccess::before {
+  background: linear-gradient(180deg, var(--card-accent-green), rgba(41, 179, 106, 0.18));
+}
+
+.surfaceAccentMuted {
+  border-color: rgba(170, 183, 209, 0.16) !important;
+}
+
+.surfaceAccentMuted::before {
+  background: linear-gradient(180deg, rgba(170, 183, 209, 0.54), rgba(170, 183, 209, 0.12));
 }
 
 @media (max-width: 1080px) {
