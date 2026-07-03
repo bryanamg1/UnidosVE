@@ -36,6 +36,25 @@ function getNeedAccentClass(need) {
   return styles.surfaceAccentInfo
 }
 
+function getProgressGradient(need) {
+  if (need.displayStatus === NEED_STATUSES.CRITICAL || need.urgency === 'critica') {
+    return 'linear-gradient(90deg, #d64545 0%, #ff7878 100%)'
+  }
+
+  if (need.displayStatus === NEED_STATUSES.COVERED) {
+    return 'linear-gradient(90deg, #29b36a 0%, #5ce69e 100%)'
+  }
+
+  if (
+    need.displayStatus === NEED_STATUSES.PARTIALLY_COVERED ||
+    need.displayStatus === NEED_STATUSES.IN_TRANSIT
+  ) {
+    return 'linear-gradient(90deg, #f0a43b 0%, #ffc575 100%)'
+  }
+
+  return 'linear-gradient(90deg, #1769ff 0%, #00d2ff 100%)'
+}
+
 function NeedCard({ need, onDonate }) {
   const coverageRatio = Math.min(
     ((need.progress.committed + need.progress.received) / need.progress.required) * 100,
@@ -104,6 +123,13 @@ function NeedCard({ need, onDonate }) {
             className={styles.progressBar}
             value={coverageRatio}
             variant="determinate"
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              '& .MuiLinearProgress-bar': {
+                background: getProgressGradient(need),
+                borderRadius: 999,
+              },
+            }}
           />
         </div>
 

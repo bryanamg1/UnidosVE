@@ -24,7 +24,7 @@ function LandingSignalPanel({ cards }) {
       </div>
 
       <div className={styles.signalCanvas}>
-        <div className={styles.signalOrbit} />
+        <div className={`${styles.signalOrbit} animatedOrbit`} />
         <div className={styles.signalGrid}>
           {cards.map((card, index) => {
             const Icon = CARD_ICONS[index] ?? RadarRoundedIcon
@@ -32,7 +32,7 @@ function LandingSignalPanel({ cards }) {
             return (
               <article key={card.title} className={styles.signalCard}>
                 <div className={styles.signalCardHeader}>
-                  <span className={styles.signalIcon}>
+                  <span className={`${styles.signalIcon} ${index === 0 ? 'animatedPulse' : ''}`}>
                     <Icon fontSize="small" />
                   </span>
                   <Chip color="primary" label={card.status} size="small" />

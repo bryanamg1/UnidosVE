@@ -425,60 +425,26 @@ function CenterDashboardPage() {
       <section className={styles.layout}>
         <div className={styles.heroCard}>
           <div className={styles.heroCopy}>
-            <Chip color="primary" label={CENTER_DASHBOARD_CONTENT.shell.badge} size="small" />
-            <Typography className={styles.heroTitle} variant="h2">
-              {CENTER_DASHBOARD_CONTENT.shell.title}
+            <Typography className={styles.heroTitle} variant="h4" sx={{ fontWeight: 800, mb: 1, letterSpacing: '-0.02em' }}>
+              Panel operativo del <span className={styles.titleGradient}>centro de acopio</span>
             </Typography>
-            <Typography color="text.secondary" variant="body1">
+            <Typography color="text.secondary" variant="body2" sx={{ maxWidth: '600px' }}>
               {CENTER_DASHBOARD_CONTENT.shell.description}
             </Typography>
           </div>
 
-          <div className={styles.heroActions}>
-            <Chip
-              label={`${user?.firstName ?? ''} ${user?.lastName ?? ''} - ${user?.role ?? ''}`}
-              size="small"
-              variant="outlined"
-            />
-            <Stack direction="row" spacing={1.25}>
-              <Button
-                component={RouterLink}
-                startIcon={<ExploreRoundedIcon />}
-                to={APP_ROUTES.HOME}
-                variant="outlined"
-              >
-                {CENTER_DASHBOARD_CONTENT.shell.backHomeLabel}
-              </Button>
-              <Button
-                component={RouterLink}
-                onClick={logout}
-                startIcon={<LogoutRoundedIcon />}
-                to={APP_ROUTES.HOME}
-                variant="contained"
-              >
-                {CENTER_DASHBOARD_CONTENT.shell.logoutLabel}
-              </Button>
-            </Stack>
-          </div>
-
           <div className={styles.summaryGrid}>
             <article className={styles.summaryCard}>
-              <Typography variant="h5">{center ? '1' : '0'}</Typography>
-              <Typography color="text.secondary" variant="body2">
-                {CENTER_DASHBOARD_CONTENT.shell.summary.profileLabel}
-              </Typography>
+              <h5>{needs.length}</h5>
+              <p style={{ color: '#475569', fontWeight: 600 }}>Necesidades publicadas</p>
             </article>
             <article className={styles.summaryCard}>
-              <Typography variant="h5">{needs.length}</Typography>
-              <Typography color="text.secondary" variant="body2">
-                {CENTER_DASHBOARD_CONTENT.shell.summary.needsLabel}
-              </Typography>
+              <h5>{donations.filter(d => d.status !== 'received' && d.status !== 'completed').length}</h5>
+              <p style={{ color: '#475569', fontWeight: 600 }}>Donaciones en camino</p>
             </article>
             <article className={styles.summaryCard}>
-              <Typography variant="h5">{donations.length}</Typography>
-              <Typography color="text.secondary" variant="body2">
-                {CENTER_DASHBOARD_CONTENT.shell.summary.donationsLabel}
-              </Typography>
+              <h5>{donations.filter(d => d.status === 'received' || d.status === 'completed').length}</h5>
+              <p style={{ color: '#475569', fontWeight: 600 }}>Aportes recibidos</p>
             </article>
           </div>
         </div>
@@ -509,7 +475,7 @@ function CenterDashboardPage() {
           <Card className={styles.sectionCard}>
             <CardContent className={styles.sectionContent}>
               <div className={styles.sectionHeader}>
-                <Typography variant="h4">{CENTER_DASHBOARD_CONTENT.profile.title}</Typography>
+                <Typography variant="h5">{CENTER_DASHBOARD_CONTENT.profile.title}</Typography>
                 <Typography color="text.secondary" variant="body2">
                   {center
                     ? CENTER_DASHBOARD_CONTENT.profile.description
@@ -532,7 +498,7 @@ function CenterDashboardPage() {
             <Card className={styles.sectionCard}>
               <CardContent className={styles.sectionContent}>
                 <div className={styles.sectionHeader}>
-                  <Typography variant="h4">{CENTER_DASHBOARD_CONTENT.needs.title}</Typography>
+                  <Typography variant="h5">{CENTER_DASHBOARD_CONTENT.needs.title}</Typography>
                   <Typography color="text.secondary" variant="body2">
                     {CENTER_DASHBOARD_CONTENT.needs.description}
                   </Typography>
@@ -621,7 +587,7 @@ function CenterDashboardPage() {
             <Card className={styles.sectionCard}>
               <CardContent className={styles.sectionContent}>
                 <div className={styles.sectionHeader}>
-                  <Typography variant="h4">{CENTER_DASHBOARD_CONTENT.shell.tabs.needs}</Typography>
+                  <Typography variant="h5">{CENTER_DASHBOARD_CONTENT.shell.tabs.needs}</Typography>
                   <Typography color="text.secondary" variant="body2">
                     {centerId
                       ? CENTER_DASHBOARD_CONTENT.needs.description
@@ -696,7 +662,7 @@ function CenterDashboardPage() {
           <Card className={styles.sectionCard}>
             <CardContent className={styles.sectionContent}>
               <div className={styles.sectionHeader}>
-                <Typography variant="h4">{CENTER_DASHBOARD_CONTENT.donations.title}</Typography>
+                <Typography variant="h5">{CENTER_DASHBOARD_CONTENT.donations.title}</Typography>
                 <Typography color="text.secondary" variant="body2">
                   {centerId
                     ? CENTER_DASHBOARD_CONTENT.donations.description

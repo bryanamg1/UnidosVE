@@ -64,7 +64,9 @@ function CentersMap({ activeCenter, centers, onRequestLocation, userCoordinates 
                 component={RouterLink}
                 size="small"
                 to={APP_ROUTES.CENTERS}
-                variant="outlined"
+                variant="contained"
+                color="primary"
+                sx={{ mt: 1, borderRadius: 2 }}
               >
                 {DONOR_MAP_CONTENT.popup.detailActionLabel}
               </Button>

@@ -375,50 +375,21 @@ function DonorMapPage() {
       <section className={styles.layout}>
         <div className={styles.headerCard}>
           <div className={styles.headerCopy}>
-            <Chip color="primary" label={DONOR_MAP_CONTENT.header.badge} size="small" />
-            <Typography className={styles.headerTitle} variant="h2">
-              {DONOR_MAP_CONTENT.header.title}
+            <Typography className={styles.headerTitle} variant="h4" sx={{ fontWeight: 800, mb: 1, letterSpacing: '-0.02em' }}>
+              Encuentra <span className={styles.titleGradient}>centros de acopio</span> y <span className={styles.titleGradient}>necesidades</span> cercanas
             </Typography>
-            <Typography color="text.secondary" variant="body1">
+            <Typography color="text.secondary" variant="body2" sx={{ maxWidth: '600px' }}>
               {DONOR_MAP_CONTENT.header.description}
             </Typography>
           </div>
 
-          <div className={styles.headerActions}>
-            <Chip
-              label={`${user?.firstName ?? ''} ${user?.lastName ?? ''} - ${user?.role ?? ''}`}
-              size="small"
-              variant="outlined"
-            />
 
-            <Stack direction="row" spacing={1.25}>
-              <Button
-                component={RouterLink}
-                startIcon={<ExploreRoundedIcon />}
-                to={APP_ROUTES.HOME}
-                variant="outlined"
-              >
-                {DONOR_MAP_CONTENT.header.backHomeLabel}
-              </Button>
-              <Button
-                component={RouterLink}
-                onClick={logout}
-                startIcon={<LogoutRoundedIcon />}
-                to={APP_ROUTES.HOME}
-                variant="contained"
-              >
-                {DONOR_MAP_CONTENT.header.logoutLabel}
-              </Button>
-            </Stack>
-          </div>
 
           <div className={styles.summaryGrid}>
             {summaryCards.map((summaryCard) => (
               <article key={summaryCard.label} className={styles.summaryCard}>
-                <Typography variant="h5">{summaryCard.value}</Typography>
-                <Typography color="text.secondary" variant="body2">
-                  {summaryCard.label}
-                </Typography>
+                <h5>{summaryCard.value}</h5>
+                <p style={{ color: '#475569', fontWeight: 600 }}>{summaryCard.label}</p>
               </article>
             ))}
           </div>
@@ -431,7 +402,6 @@ function DonorMapPage() {
             <CardContent className={styles.mapCardContent}>
               <div className={styles.mapCardHeader}>
                 <div>
-                  <Chip color="primary" label={DONOR_MAP_CONTENT.mapCard.badge} size="small" />
                   <Typography className={styles.mapTitle} variant="h4">
                     {DONOR_MAP_CONTENT.mapCard.title}
                   </Typography>
@@ -480,7 +450,6 @@ function DonorMapPage() {
 
         <section className={styles.feedSection}>
           <div className={styles.feedHeader}>
-            <Chip color="primary" label={DONOR_FEED_CONTENT.section.badge} size="small" />
             <Typography variant="h3">{DONOR_FEED_CONTENT.section.title}</Typography>
             <Typography color="text.secondary" variant="body1">
               {DONOR_FEED_CONTENT.section.description}

@@ -1,15 +1,13 @@
 import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded'
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded'
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded'
-import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded'
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import { Button, Card, CardContent, Stack, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import styles from '../styles/LandingPage.module.css'
 
 const ACTION_ICONS = {
+  donor: FavoriteRoundedIcon,
   center: BusinessRoundedIcon,
-  login: LoginRoundedIcon,
-  register: PersonAddAltRoundedIcon,
 }
 
 function LandingActions({ actions }) {
@@ -17,12 +15,12 @@ function LandingActions({ actions }) {
     <div className={styles.actionsGrid}>
       {actions.map((action) => {
         const Icon = ACTION_ICONS[action.id] ?? ArrowOutwardRoundedIcon
-        const isCenterAction = action.id === 'center'
+        const isPrimaryAction = action.id === 'donor'
 
         return (
           <Card
             key={action.id}
-            className={`${styles.actionCard} ${isCenterAction ? styles.actionCardPrimary : ''}`}
+            className={`${styles.actionCard} ${isPrimaryAction ? styles.actionCardPrimary : ''}`}
           >
             <CardContent className={styles.actionCardContent}>
               <div className={styles.actionCardBody}>
@@ -32,7 +30,9 @@ function LandingActions({ actions }) {
                   justifyContent="space-between"
                   spacing={2}
                 >
-                  <Typography variant="h6">{action.label}</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                    {action.label}
+                  </Typography>
                   <span className={styles.actionCardIcon}>
                     <Icon fontSize="small" />
                   </span>
@@ -44,12 +44,12 @@ function LandingActions({ actions }) {
               </div>
 
               <Button
-                className={`${styles.actionButton} ${isCenterAction ? styles.actionButtonPrimary : ''}`}
+                className={`${styles.actionButton} ${isPrimaryAction ? styles.actionButtonPrimary : ''}`}
                 component={RouterLink}
                 to={action.to}
-                variant="outlined"
+                variant={isPrimaryAction ? 'contained' : 'outlined'}
               >
-                {action.label}
+                {action.buttonLabel}
               </Button>
             </CardContent>
           </Card>

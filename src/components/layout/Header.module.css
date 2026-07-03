@@ -1,0 +1,95 @@
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.logoLink:hover {
+  opacity: 0.9;
+}
+
+.logoIcon {
+  color: #1769ff;
+  font-size: 28px !important;
+  filter: drop-shadow(0 2px 8px rgba(23, 105, 255, 0.2));
+}
+
+.logoText {
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  background: linear-gradient(135deg, #0f172a 30%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.userBadge {
+  background-color: rgba(23, 105, 255, 0.05) !important;
+  border-color: rgba(23, 105, 255, 0.2) !important;
+  color: #1769ff !important;
+  height: 36px !important;
+}
+
+.navLinkButton {
+  border-radius: 12px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding-inline: 16px !important;
+  font-weight: 700 !important;
+  border-color: rgba(23, 105, 255, 0.2) !important;
+}
+
+.navLinkActive {
+  color: #1769ff !important;
+  font-weight: 800 !important;
+  border-radius: 12px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding-inline: 16px !important;
+  background: rgba(23, 105, 255, 0.06) !important;
+}
+
+.logoutButton {
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  background: rgba(15, 23, 42, 0.02) !important;
+  color: #475569 !important;
+  padding: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoutButton:hover {
+  background: rgba(214, 69, 69, 0.08) !important;
+  border-color: rgba(214, 69, 69, 0.25) !important;
+  color: #d64545 !important;
+  transform: translateY(-1px);
+}

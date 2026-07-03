@@ -91,7 +91,7 @@ function RegisterPage() {
   }
 
   return (
-    <AuthPageShell>
+    <AuthPageShell isRegister>
       <AuthFormCard
         error={error}
         fields={REGISTER_FIELDS}

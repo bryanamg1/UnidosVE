@@ -5,6 +5,7 @@ import { APP_ROUTES, AUTH_ROLES } from '../constants'
 import PublicRoute from './PublicRoute'
 import ProtectedRoute from './ProtectedRoute'
 import RoleRoute from './RoleRoute'
+import Layout from '../components/layout/Layout'
 
 const LandingPage = lazy(() => import('../features/landing/pages/LandingPage'))
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'))
@@ -39,101 +40,115 @@ function AppRoutes() {
     <BrowserRouter>
       <Suspense fallback={<RouteLoadingFallback />}>
         <Routes>
-        <Route
-          path={APP_ROUTES.HOME}
-          element={
-            <PublicRoute>
-              <LandingPage />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path={APP_ROUTES.LOGIN}
-          element={
-            <PublicRoute restrictWhenAuthenticated>
-              <LoginPage />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path={APP_ROUTES.REGISTER}
-          element={
-            <PublicRoute restrictWhenAuthenticated>
-              <RegisterPage />
-            </PublicRoute>
-          }
-        />
-
-        {PUBLIC_ROUTES.map(({ path, pageKey }) => (
           <Route
-            key={path}
-            path={path}
+            path={APP_ROUTES.HOME}
             element={
               <PublicRoute>
-                <PublicPlaceholderPage pageKey={pageKey} />
+                <Layout>
+                  <LandingPage />
+                </Layout>
               </PublicRoute>
             }
           />
-        ))}
 
-        <Route
-          path={APP_ROUTES.DONATE}
-          element={
-            <ProtectedRoute>
-              <RoleRoute allowedRoles={[AUTH_ROLES.DONOR]}>
-                <DonorMapPage />
-              </RoleRoute>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path={APP_ROUTES.LOGIN}
+            element={
+              <PublicRoute restrictWhenAuthenticated>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
 
-        <Route
-          path={APP_ROUTES.CENTER_REGISTER}
-          element={
-            <ProtectedRoute>
-              <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <CenterDashboardPage />
-              </RoleRoute>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path={APP_ROUTES.REGISTER}
+            element={
+              <PublicRoute restrictWhenAuthenticated>
+                <RegisterPage />
+              </PublicRoute>
+            }
+          />
 
-        <Route
-          path={APP_ROUTES.CENTER_DASHBOARD}
-          element={
-            <ProtectedRoute>
-              <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <CenterDashboardPage />
-              </RoleRoute>
-            </ProtectedRoute>
-          }
-        />
+          {PUBLIC_ROUTES.map(({ path, pageKey }) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <PublicRoute>
+                  <Layout>
+                    <PublicPlaceholderPage pageKey={pageKey} />
+                  </Layout>
+                </PublicRoute>
+              }
+            />
+          ))}
 
-        <Route
-          path={APP_ROUTES.CENTER_NEEDS}
-          element={
-            <ProtectedRoute>
-              <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <CenterDashboardPage />
-              </RoleRoute>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path={APP_ROUTES.DONATE}
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowedRoles={[AUTH_ROLES.DONOR]}>
+                  <Layout>
+                    <DonorMapPage />
+                  </Layout>
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path={APP_ROUTES.CENTER_DONATIONS}
-          element={
-            <ProtectedRoute>
-              <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
-                <CenterDashboardPage />
-              </RoleRoute>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path={APP_ROUTES.CENTER_REGISTER}
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
+                  <Layout>
+                    <CenterDashboardPage />
+                  </Layout>
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route path="*" element={<Navigate replace to={APP_ROUTES.NOT_FOUND} />} />
+          <Route
+            path={APP_ROUTES.CENTER_DASHBOARD}
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
+                  <Layout>
+                    <CenterDashboardPage />
+                  </Layout>
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={APP_ROUTES.CENTER_NEEDS}
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
+                  <Layout>
+                    <CenterDashboardPage />
+                  </Layout>
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={APP_ROUTES.CENTER_DONATIONS}
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowedRoles={[AUTH_ROLES.CENTER]}>
+                  <Layout>
+                    <CenterDashboardPage />
+                  </Layout>
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<Navigate replace to={APP_ROUTES.NOT_FOUND} />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

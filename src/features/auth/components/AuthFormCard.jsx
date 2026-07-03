@@ -8,8 +8,13 @@ import {
   Stack,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton,
 } from '@mui/material'
+import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { AUTH_ROLE_OPTIONS, AUTH_VIEW_CONTENT } from '../../../constants'
 import styles from '../styles/AuthPage.module.css'
 
@@ -26,6 +31,8 @@ function AuthFormCard({
   secondaryRoute,
   secondaryActionLabel,
 }) {
+  const [showPassword, setShowPassword] = useState(false)
+
   return (
     <Card className={styles.formCard}>
       <CardContent className={styles.formCardContent}>
@@ -67,6 +74,8 @@ function AuthFormCard({
               )
             }
 
+            const isPasswordField = field.type === 'password'
+
             return (
               <TextField
                 key={field.name}
@@ -75,8 +84,26 @@ function AuthFormCard({
                 name={field.name}
                 onChange={onFieldChange}
                 required={field.required}
-                type={field.type}
+                type={isPasswordField && showPassword ? 'text' : field.type}
                 value={values[field.name]}
+                slotProps={{
+                  input: isPasswordField
+                    ? {
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                              size="small"
+                            >
+                              {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }
+                    : undefined,
+                }}
               />
             )
           })}
