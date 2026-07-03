@@ -9,6 +9,7 @@ import {
   MAP_INTERACTION,
   MAP_TILE_CONFIG,
 } from '../../../constants'
+import MapLocateControl from './MapLocateControl'
 import MapViewportSync from './MapViewportSync'
 import styles from '../styles/DonorMapPage.module.css'
 
@@ -20,7 +21,7 @@ const centerMarkerIcon = L.divIcon({
   popupAnchor: [0, -30],
 })
 
-function CentersMap({ activeCenter, centers, userCoordinates }) {
+function CentersMap({ activeCenter, centers, onRequestLocation, userCoordinates }) {
   const initialFocus = activeCenter?.coordinates ?? userCoordinates ?? MAP_DEFAULTS.center
 
   return (
@@ -33,6 +34,10 @@ function CentersMap({ activeCenter, centers, userCoordinates }) {
       <TileLayer attribution={MAP_TILE_CONFIG.attribution} url={MAP_TILE_CONFIG.url} />
 
       <MapViewportSync focusCoordinates={initialFocus} />
+      <MapLocateControl
+        onRequestLocation={onRequestLocation}
+        userCoordinates={userCoordinates}
+      />
 
       {centers.map((center) => (
         <Marker

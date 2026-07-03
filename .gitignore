@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Codex instructions and private backend docs
+codex.local.instructions.txt
+docs/backend-integration-guide.md

@@ -460,6 +460,7 @@ function DonorMapPage() {
                 <CentersMap
                   activeCenter={activeCenter}
                   centers={centersWithDistance}
+                  onRequestLocation={requestLocation}
                   userCoordinates={coordinates}
                 />
               )}
@@ -550,10 +551,12 @@ function DonorMapPage() {
                     <CircularProgress size={24} />
                   </div>
                 ) : filteredNeeds.length ? (
-                  <div className={styles.needsList}>
-                    {filteredNeeds.map((need) => (
-                      <NeedCard key={need.id} need={need} onDonate={handleOpenDonationDialog} />
-                    ))}
+                  <div className={`${styles.publishedNeedsPanel} ${styles.scrollPanel}`}>
+                    <div className={styles.needsList}>
+                      {filteredNeeds.map((need) => (
+                        <NeedCard key={need.id} need={need} onDonate={handleOpenDonationDialog} />
+                      ))}
+                    </div>
                   </div>
                 ) : (
                   <Alert severity="info">

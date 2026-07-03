@@ -5,6 +5,7 @@ export const MAP_DEFAULTS = {
   },
   zoom: 6,
   focusZoom: 12,
+  userLocationZoom: 13,
   nearbyRadiusKm: 25,
 }
 
