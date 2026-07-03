@@ -30,19 +30,10 @@ export const LANDING_CONTENT = {
   title: 'Activa ayuda concreta para Venezuela desde una sola plataforma.',
   description:
     'UnidosVE conecta centros de acopio, necesidades activas y donaciones con seguimiento claro para responder mas rapido donde la ayuda hace falta.',
-  cta: {
-    primaryLabel: 'Explorar necesidades activas',
-    secondaryLabel: 'Ver centros disponibles',
-  },
   highlightChips: [
     'Centros cercanos',
     'Necesidades prioritarias',
     'Donaciones con seguimiento',
-  ],
-  stats: [
-    { value: 'Centros', label: 'Puntos de entrega visibles en el mapa' },
-    { value: 'Necesidades', label: 'Prioridades publicadas por cada centro' },
-    { value: 'Donaciones', label: 'Seguimiento claro desde el compromiso hasta la entrega' },
   ],
   actions: [
     {
