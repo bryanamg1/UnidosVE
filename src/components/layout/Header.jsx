@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom'
 import { Button, Chip, Stack, Typography, useMediaQuery, IconButton } from '@mui/material'
 import VolunteerActivismRoundedIcon from '@mui/icons-material/VolunteerActivismRounded'
@@ -7,7 +6,6 @@ import LoginRoundedIcon from '@mui/icons-material/LoginRounded'
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded'
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
 import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded'
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
 import { useAuth } from '../../features/auth/hooks/useAuth'
 import { APP_ROUTES, AUTH_ROLES } from '../../constants'
 import styles from './Header.module.css'
@@ -41,7 +39,7 @@ function Header() {
           </Typography>
         </RouterLink>
 
-        <Stack direction="row" spacing={1.5} alignItems="center">
+        <Stack className={styles.actionsGroup} direction="row" spacing={1.5} alignItems="center">
           {isAuthenticated ? (
             <>
               {!isMobile && (

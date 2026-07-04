@@ -20,12 +20,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
 }
 
 .logoLink {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   transition: opacity 0.2s ease;
 }
 
@@ -45,6 +48,14 @@
   background: linear-gradient(135deg, #0f172a 30%, #475569 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.actionsGroup {
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .userBadge {
@@ -92,4 +103,47 @@
   border-color: rgba(214, 69, 69, 0.25) !important;
   color: #d64545 !important;
   transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: min(100%, calc(100% - 24px));
+  }
+
+  .logoText {
+    font-size: 1.2rem !important;
+  }
+
+  .navLinkButton,
+  .navLinkActive {
+    padding-inline: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: min(100%, calc(100% - 16px));
+    gap: 8px;
+  }
+
+  .logoLink {
+    gap: 6px;
+  }
+
+  .logoIcon {
+    font-size: 24px !important;
+  }
+
+  .logoText {
+    font-size: 1rem !important;
+  }
+
+  .actionsGroup {
+    gap: 8px !important;
+  }
+
+  .actionsGroup :global(.MuiButton-root) {
+    min-width: 0;
+    padding-inline: 10px !important;
+  }
 }
