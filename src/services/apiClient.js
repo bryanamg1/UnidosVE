@@ -3,7 +3,13 @@ import { readStorageItem } from '../features/auth/utils/authStorage'
 import { AUTH_STORAGE_KEYS } from '../constants'
 
 function normalizeBaseUrl(baseUrl) {
-  return baseUrl.replace(/\/+$/, '').replace(/\/api$/, '')
+  const normalizedUrl = baseUrl.trim().replace(/\/+$/, '').replace(/\/api$/, '')
+
+  if (/^https?:\/\//i.test(normalizedUrl)) {
+    return normalizedUrl
+  }
+
+  return `https://${normalizedUrl}`
 }
 
 function buildUrl(pathname, query = {}) {
